@@ -1,0 +1,24 @@
+{
+    "author": "todd.scott.rule@gmail.com",
+    "dependencies": {},
+    "keywords": [],
+    "name": "pathfinder",
+    "pebble": {
+        "capabilities": [
+            ""
+        ],
+        "displayName": "Pathfinder",
+        "enableMultiJS": false,
+        "messageKeys": [],
+        "projectType": "native",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "uuid": "1b8d6185-e620-43fb-98e9-120f6c6132fb",
+        "watchapp": {
+            "watchface": false
+        }
+    },
+    "version": "1.0.0"
+}
