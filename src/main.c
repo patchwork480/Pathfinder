@@ -30,6 +30,7 @@ static void handle_time_changes (struct tm *tick_time, TimeUnits units_changed) 
 
 				last_wday = tick_time->tm_wday;
 				strftime(wday_buffer, sizeof(wday_buffer), "%a", tick_time);
+				strupr(wday_buffer);
 
 				snprintf(message_buffer, sizeof(message_buffer), "YMD: %d-%d-%d (%d)",
 						last_year, last_mon, last_mday, last_wday);
