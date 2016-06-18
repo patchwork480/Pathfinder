@@ -9,6 +9,9 @@
 #define PF_MOON_H		40
 
 
+#define PF_NUM_PHASES	16
+
+
 extern Layer *moon_layer;
 extern char message_buffer[64];
 

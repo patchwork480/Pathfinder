@@ -136,4 +136,3 @@ void draw_chrg (Layer *layer, GContext *ctx) {
 
 
 /* EOF */
-
