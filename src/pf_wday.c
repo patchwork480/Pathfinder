@@ -16,10 +16,12 @@ void update_wday (struct tm *tick_wday, TimeUnits units_changed) {
 
 GPath *PF_WDAY_BORDER = NULL;
 const GPathInfo PF_WDAY_BORDER_INFO = {
-  .num_points = 15,
-  .points = (GPoint [])
-				{{2,0}, {33,0}, {34,1}, {34,2}, {35,3}, {34,4}, {34,5}, {33,6}, {2,6}, {1,5}, {1,4}, {0,3}, {1,2}, {1,1}, {2,0}}
-};
+	.num_points = 23,
+	.points = (GPoint []) {
+			{4,0}, {43,0}, {44,1}, {45,2}, {46,3}, {46,8}, {47,9}, {46,10},
+			{46,16}, {45,17}, {44,18}, {43,19}, {4,19}, {3,18}, {2,17}, {1,16},
+			{1,10}, {0,9}, {1,8}, {1,3}, {2,2}, {3,1}, {4,0}
+	} };
 
 
 

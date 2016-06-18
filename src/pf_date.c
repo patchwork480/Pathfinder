@@ -18,10 +18,11 @@ void update_date (struct tm *tick_date, TimeUnits units_changed) {
 
 GPath *PF_DATE_BORDER = NULL;
 const GPathInfo PF_DATE_BORDER_INFO = {
-  .num_points = 15,
-  .points = (GPoint [])
-				{{2,0}, {33,0}, {34,1}, {34,2}, {35,3}, {34,4}, {34,5}, {33,6}, {2,6}, {1,5}, {1,4}, {0,3}, {1,2}, {1,1}, {2,0}}
-};
+	.num_points = 23,
+	.points = (GPoint []) {
+			{4,0}, {91,0}, {92,1}, {93,2}, {94,3}, {94,12}, {95,13}, {94,14}, {94,23}, {93,24}, {92,25}, {91,26},
+			{4,26}, {3,25}, {2,24}, {1,23}, {1,14}, {0,13}, {1,12}, {1,3}, {2,2}, {3,1}, {4,0}
+} };
 
 
 
