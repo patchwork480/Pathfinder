@@ -7,6 +7,11 @@ char wday_buffer[12];
 int last_wday;
 
 
+void init_wday () {
+		last_wday = -1;
+}
+
+
 void update_wday (struct tm *tick_wday, TimeUnits units_changed) {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_wday");
 		layer_mark_dirty(wday_layer);
@@ -38,7 +43,7 @@ void draw_wday (Layer *layer, GContext *ctx) {
 
 		// graphics_context_set_fill_color(ctx, PF_BACKGND);
 		// graphics_fill_rect(ctx, bounds, 0, GCornerNone);
-  
+
 		if(PF_WDAY_BORDER==NULL) {
 				PF_WDAY_BORDER = gpath_create(&PF_WDAY_BORDER_INFO);
 		}

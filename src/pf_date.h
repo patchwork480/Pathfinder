@@ -18,6 +18,7 @@ extern int last_mon;
 extern int last_mday;
 
 
+extern void init_date ();
 extern void update_date (struct tm *tick_date, TimeUnits units_changed);
 extern void draw_date (Layer *layer, GContext *ctx);
 

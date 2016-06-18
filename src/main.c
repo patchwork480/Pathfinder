@@ -65,8 +65,7 @@ static void handle_time_changes (struct tm *tick_time, TimeUnits units_changed) 
 
 static void main_window_load (Window *window) {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "main_window_load");
-		last_year = last_mon = last_mday = last_wday = last_moon = last_hour = last_min = last_sec = -1;
-  
+
 		// Set Window Background
 		window_set_background_color(window, GColorWhite);
 
@@ -135,7 +134,11 @@ static void main_window_unload (Window *window) {
 
 static void init (void) {
 		// Init the models
+		init_time();
+		init_date();
+		init_wday();
 		init_btty();
+		init_moon();
 		// Create the window
 		main_window = window_create();
 		// Set the window handlers

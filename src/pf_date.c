@@ -9,6 +9,13 @@ int last_mon;
 int last_mday;
 
 
+void init_date () {
+		last_year = -1;
+		last_mon = -1;
+		last_mday = -1;
+}
+
+
 void update_date (struct tm *tick_date, TimeUnits units_changed) {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_date");
 		layer_mark_dirty(date_layer);
@@ -39,7 +46,7 @@ void draw_date (Layer *layer, GContext *ctx) {
 
 		// graphics_context_set_fill_color(ctx, PF_BACKGND);
 		// graphics_fill_rect(ctx, bounds, 0, GCornerNone);
-  
+
 		if(PF_DATE_BORDER==NULL) {
 				PF_DATE_BORDER = gpath_create(&PF_DATE_BORDER_INFO);
 		}

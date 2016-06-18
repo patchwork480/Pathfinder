@@ -9,6 +9,13 @@ int last_min;
 int last_sec;
 
 
+void init_time () {
+		last_hour = -1;
+		last_min = -1;
+		last_sec = -1;
+}
+
+
 void update_time (struct tm *tick_time, TimeUnits units_changed) {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_battery");
 		layer_mark_dirty(time_layer);
@@ -40,12 +47,12 @@ void draw_time (Layer *layer, GContext *ctx) {
 
 		// graphics_context_set_fill_color(ctx, PF_BACKGND);
 		// graphics_fill_rect(ctx, bounds, 0, GCornerNone);
-  
-	if(PF_TIME_BORDER==NULL) {
-		PF_TIME_BORDER = gpath_create(&PF_TIME_BORDER_INFO);
-	}
-	graphics_context_set_stroke_color(ctx, PF_BORDER);
-	gpath_draw_outline(ctx, PF_TIME_BORDER);
+
+		if(PF_TIME_BORDER==NULL) {
+				PF_TIME_BORDER = gpath_create(&PF_TIME_BORDER_INFO);
+		}
+		graphics_context_set_stroke_color(ctx, PF_BORDER);
+		gpath_draw_outline(ctx, PF_TIME_BORDER);
 
 		graphics_context_set_text_color(ctx, PF_FOREGND);
 		graphics_draw_text(ctx, time_buffer,
