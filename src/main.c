@@ -135,7 +135,7 @@ static void main_window_unload (Window *window) {
 
 static void init (void) {
 		// Init the models
-        init_btty();
+		init_btty();
 		// Create the window
 		main_window = window_create();
 		// Set the window handlers

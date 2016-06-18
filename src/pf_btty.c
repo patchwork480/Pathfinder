@@ -63,7 +63,7 @@ void draw_btty (Layer *layer, GContext *ctx) {
 				PF_BTTY_STATII[btty_status] = gpath_create(&PF_BTTY_STATII_INFO[btty_status]);
 		}
 		graphics_context_set_fill_color(ctx, PF_FOREGND);
-	    graphics_context_set_stroke_color(ctx, PF_FOREGND);
+		graphics_context_set_stroke_color(ctx, PF_FOREGND);
 		gpath_draw_filled(ctx, PF_BTTY_STATII[btty_status]);
 		gpath_draw_outline(ctx, PF_BTTY_STATII[btty_status]);
 }
@@ -75,7 +75,7 @@ const GPathInfo PF_PLUG_SYMBOL_INFO = {
 	.points = (GPoint []) {
 			{0,2}, {2,2}, {2,0}, {3,0}, {3,2}, {5,2}, {5,0}, {6,0},
 			{6,2}, {8,2}, {8,3}, {5,6}, {5,8}, {3,8}, {3,6}, {0,3},
-            {0,2}
+			{0,2}
 	} };
 
 
@@ -86,9 +86,9 @@ void draw_plug (Layer *layer, GContext *ctx) {
 						PF_PLUG_SYMBOL = gpath_create(&PF_PLUG_SYMBOL_INFO);
 				}
 				graphics_context_set_fill_color(ctx, PF_FOREGND);
-		        graphics_context_set_stroke_color(ctx, PF_FOREGND);
+				graphics_context_set_stroke_color(ctx, PF_FOREGND);
 				gpath_draw_filled(ctx, PF_PLUG_SYMBOL);
-	        	gpath_draw_outline(ctx, PF_PLUG_SYMBOL);
+				gpath_draw_outline(ctx, PF_PLUG_SYMBOL);
 		}
 }
 
@@ -118,18 +118,18 @@ void draw_chrg (Layer *layer, GContext *ctx) {
 						if(PF_CMPL_SYMBOL==NULL) {
 								PF_CMPL_SYMBOL = gpath_create(&PF_CMPL_SYMBOL_INFO);
 						}
-		        		graphics_context_set_fill_color(ctx, PF_FOREGND);
-	        	        graphics_context_set_stroke_color(ctx, PF_FOREGND);
-	        			gpath_draw_filled(ctx, PF_CMPL_SYMBOL);
-	                	gpath_draw_outline(ctx, PF_CMPL_SYMBOL);
+						graphics_context_set_fill_color(ctx, PF_FOREGND);
+						graphics_context_set_stroke_color(ctx, PF_FOREGND);
+						gpath_draw_filled(ctx, PF_CMPL_SYMBOL);
+						gpath_draw_outline(ctx, PF_CMPL_SYMBOL);
 				} else if(is_charging) {
 						if(PF_CHRG_SYMBOL==NULL) {
 								PF_CHRG_SYMBOL = gpath_create(&PF_CHRG_SYMBOL_INFO);
 						}
-	        			graphics_context_set_fill_color(ctx, PF_FOREGND);
-	        	        graphics_context_set_stroke_color(ctx, PF_FOREGND);
-	        			gpath_draw_filled(ctx, PF_CHRG_SYMBOL);
-	                	gpath_draw_outline(ctx, PF_CHRG_SYMBOL);
+						graphics_context_set_fill_color(ctx, PF_FOREGND);
+						graphics_context_set_stroke_color(ctx, PF_FOREGND);
+						gpath_draw_filled(ctx, PF_CHRG_SYMBOL);
+						gpath_draw_outline(ctx, PF_CHRG_SYMBOL);
 				}
 		}
 }
