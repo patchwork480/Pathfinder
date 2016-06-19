@@ -22,7 +22,6 @@ Layer *moon_layer;
 
 
 static void handle_time_changes (struct tm *tick_time, TimeUnits units_changed) {
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "handle_time_changes");
 		if( last_mday != tick_time->tm_mday ) {
 				last_year = tick_time->tm_year;
 				last_mon = tick_time->tm_mon;
@@ -32,10 +31,6 @@ static void handle_time_changes (struct tm *tick_time, TimeUnits units_changed) 
 				last_wday = tick_time->tm_wday;
 				strftime(wday_buffer, sizeof(wday_buffer), "%a", tick_time);
 				strupr(wday_buffer);
-
-				snprintf(message_buffer, sizeof(message_buffer), "YMD: %d-%d-%d (%d)",
-						last_year, last_mon, last_mday, last_wday);
-				APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
 
 				jul_date = julian_date(last_year, last_mon, last_mday);
 				last_moon = jul_date % PF_NUM_PHASES;
@@ -54,17 +49,13 @@ static void handle_time_changes (struct tm *tick_time, TimeUnits units_changed) 
 						strftime(time_buffer, sizeof(time_buffer), "%I:%M:%S", tick_time);
 				}
 
-				snprintf(message_buffer, sizeof(message_buffer), "HMS: %d:%d:%d",
-						last_hour, last_min, last_sec);
-				APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
-
 				layer_mark_dirty(time_layer);
 		}
 }
 
 
 static void main_window_load (Window *window) {
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "main_window_load");
+		// APP_LOG(APP_LOG_LEVEL_DEBUG, "main_window_load");
 
 		// Set Window Background
 		window_set_background_color(window, scheme.backgnd);

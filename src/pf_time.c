@@ -1,5 +1,6 @@
 #include <pebble.h>
 #include "pf_scheme.h"
+#include "pf_util.h"
 #include "pf_time.h"
 
 
@@ -34,7 +35,7 @@ void init_time () {
 
 
 void update_time (struct tm *tick_time, TimeUnits units_changed) {
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_battery");
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_time");
 		layer_mark_dirty(time_layer);
 }
 
@@ -50,12 +51,13 @@ const GPathInfo PF_TIME_BORDER_INFO = {
 	} };
 
 
-GPath *PF_TIME_DASH_1 = NULL;
-GPath *PF_TIME_DASH_2 = NULL;
-const GPathInfo PF_TIME_DASH_INFO = {
-	.num_points = 7,
-	.points = (GPoint []) {
-			{3,9}, {6,9}, {7,10}, {6,11}, {3,11}, {2,10}, {3,9}
+GPath *PF_TIME_COLON_1 = NULL;
+const GPathInfo PF_TIME_COLON_1_INFO = {
+	.num_points = 5, .points = (GPoint []) { {2,10}, {4,12}, {2,14}, {0,12}, {2,10}
+} };
+GPath *PF_TIME_COLON_2 = NULL;
+const GPathInfo PF_TIME_COLON_2_INFO = {
+	.num_points = 5, .points = (GPoint []) { {2,25}, {4,27}, {2,29}, {0,27}, {2,25}
 } };
 
 
@@ -64,8 +66,8 @@ GPoint PF_TIME_XY[PF_TIME_PLACES] = {
 		{PF_TIME_DIGIT_2_X, PF_TIME_DIGIT_Y},
 		{PF_TIME_DIGIT_3_X, PF_TIME_DIGIT_Y},
 		{PF_TIME_DIGIT_4_X, PF_TIME_DIGIT_Y},
-		{PF_TIME_DIGIT_5_X, PF_TIME_DIGIT_Y},
-		{PF_TIME_DIGIT_6_X, PF_TIME_DIGIT_Y}
+		{PF_TIME_DIGIT_5_X, PF_TIME_SMALL_Y},
+		{PF_TIME_DIGIT_6_X, PF_TIME_SMALL_Y}
 };
 
 
@@ -79,27 +81,52 @@ GPath *PF_TIME_SEGMENTS[PF_TIME_PLACES][PF_NUM_SEGMENTS] = {
 };
 
 
-const GPathInfo PF_TIME_SEGMENTS_INFO[PF_NUM_SEGMENTS] = {
+const GPathInfo PF_TIME_SEGMENTS_LG_INFO[PF_NUM_SEGMENTS] = {
 		{ .num_points = 7, .points = (GPoint []) {
-				{3,0}, {7,0}, {8,1}, {7,2}, {3,2}, {2,1}, {3,0}
+				{5,0}, {15,0}, {17,2}, {15,4}, {5,4}, {3,2}, {5,0}
 		} },
 		{ .num_points = 7, .points = (GPoint []) {
-				{9,2}, {10,3}, {10,8}, {9,9}, {8,8}, {8,3}, {9,2}
+				{18,3}, {20,5}, {20,17}, {18,19}, {16,17}, {16,5}, {18,3}
 		} },
 		{ .num_points = 7, .points = (GPoint []) {
-				{9,18}, {10,17}, {10,12}, {9,11}, {8,12}, {8,17}, {9,18}
+				{18,37}, {20,35}, {20,23}, {18,21}, {16,23}, {16,35}, {18,37}
 		} },
 		{ .num_points = 7, .points = (GPoint []) {
-				{3,20}, {7,20}, {8,19}, {7,18}, {3,18}, {2,19}, {3,20}
+				{5,40}, {15,40}, {17,38}, {15,36}, {5,36}, {3,38}, {5,40}
 		} },
 		{ .num_points = 7, .points = (GPoint []) {
-				{1,18}, {0,17}, {0,12}, {1,11}, {2,12}, {2,17}, {1,18}
+				{2,37}, {0,35}, {0,23}, {2,21}, {4,23}, {4,35}, {2,37}
 		} },
 		{ .num_points = 7, .points = (GPoint []) {
-				{1,2}, {0,3}, {0,8}, {1,9}, {2,8}, {2,3}, {1,2}
+				{2,3}, {0,5}, {0,17}, {2,19}, {4,17}, {4,5}, {2,3}
 		} },
 		{ .num_points = 7, .points = (GPoint []) {
-				{3,9}, {7,9}, {8,10}, {7,11}, {3,11}, {2,10}, {3,9}
+				{5,18}, {15,18}, {17,20}, {15,22}, {5,22}, {3,20}, {5,18}
+		} }
+};
+
+
+const GPathInfo PF_TIME_SEGMENTS_SM_INFO[PF_NUM_SEGMENTS] = {
+		{ .num_points = 7, .points = (GPoint []) {
+				{3,0}, {8,0}, {9,1}, {8,2}, {3,2}, {2,1}, {3,0}
+		} },
+		{ .num_points = 7, .points = (GPoint []) {
+				{10,2}, {11,3}, {11,9}, {10,10}, {9,9}, {9,3}, {10,2}
+		} },
+		{ .num_points = 7, .points = (GPoint []) {
+				{10,20}, {11,19}, {11,13}, {10,12}, {9,13}, {9,19}, {10,20}
+		} },
+		{ .num_points = 7, .points = (GPoint []) {
+				{3,22}, {8,22}, {9,21}, {8,20}, {3,20}, {2,21}, {3,22}
+		} },
+		{ .num_points = 7, .points = (GPoint []) {
+				{1,20}, {0,19}, {0,13}, {1,12}, {2,13}, {2,19}, {1,20}
+		} },
+		{ .num_points = 7, .points = (GPoint []) {
+				{1,2}, {0,3}, {0,9}, {1,10}, {2,9}, {2,3}, {1,2}
+		} },
+		{ .num_points = 7, .points = (GPoint []) {
+				{3,10}, {8,10}, {9,11}, {8,12}, {3,12}, {2,11}, {3,10}
 		} }
 };
 
@@ -108,7 +135,11 @@ void draw_time_glyph (GContext *ctx, bool segments[PF_NUM_SEGMENTS], int place) 
 		for( int s = 0; s < PF_NUM_SEGMENTS; s++ ) {
 				if(segments[s]) {
 						if(PF_TIME_SEGMENTS[place][s]==NULL) {
-								PF_TIME_SEGMENTS[place][s] = gpath_create(&PF_TIME_SEGMENTS_INFO[s]);
+								if( (place==4) || (place==5) ) {
+										PF_TIME_SEGMENTS[place][s] = gpath_create(&PF_TIME_SEGMENTS_SM_INFO[s]);
+								} else {
+										PF_TIME_SEGMENTS[place][s] = gpath_create(&PF_TIME_SEGMENTS_LG_INFO[s]);
+								}
 								gpath_move_to(PF_TIME_SEGMENTS[place][s], PF_TIME_XY[place]);
 						}
 						gpath_draw_filled(ctx, PF_TIME_SEGMENTS[place][s]);
@@ -131,15 +162,6 @@ void draw_time_digit (GContext *ctx, char digit, bool zero, int place) {
 
 
 void draw_time (Layer *layer, GContext *ctx) {
-		GRect bounds = layer_get_bounds(layer);
-		snprintf(message_buffer, sizeof(message_buffer), "draw_hour_min: %d,%d:%dx%d (%s)",
-				bounds.origin.x, bounds.origin.y, bounds.size.w, bounds.size.h,
-				layer_get_hidden(layer) ? "true" : "false");
-		APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
-
-		snprintf(message_buffer, sizeof(message_buffer), " - Drawing: ``%s''",
-				time_buffer);
-		APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
 
 		// Draw BORDER
 		if(PF_TIME_BORDER==NULL) {
@@ -152,24 +174,24 @@ void draw_time (Layer *layer, GContext *ctx) {
 		graphics_context_set_stroke_color(ctx, scheme.foregnd);
 		graphics_context_set_fill_color(ctx, scheme.foregnd);
 
-		// Draw DASH #1
-		if(PF_TIME_DASH_1==NULL) {
-				PF_TIME_DASH_1 = gpath_create(&PF_TIME_DASH_INFO);
-				gpath_move_to(PF_TIME_DASH_1, (GPoint){PF_TIME_DASH_1_X, PF_TIME_DIGIT_Y});
+		// Draw COLON #1
+		if(PF_TIME_COLON_1==NULL) {
+				PF_TIME_COLON_1 = gpath_create(&PF_TIME_COLON_1_INFO);
+				gpath_move_to(PF_TIME_COLON_1, (GPoint){PF_TIME_COLON_X, PF_TIME_DIGIT_Y});
 		}
-		gpath_draw_filled(ctx, PF_TIME_DASH_1);
-		gpath_draw_outline(ctx, PF_TIME_DASH_1);
+		gpath_draw_filled(ctx, PF_TIME_COLON_1);
+		gpath_draw_outline(ctx, PF_TIME_COLON_1);
 
-		// Draw DASH #2
-		if(PF_TIME_DASH_2==NULL) {
-				PF_TIME_DASH_2 = gpath_create(&PF_TIME_DASH_INFO);
-				gpath_move_to(PF_TIME_DASH_2, (GPoint){PF_TIME_DASH_2_X, PF_TIME_DIGIT_Y});
+		// Draw COLON #2
+		if(PF_TIME_COLON_2==NULL) {
+				PF_TIME_COLON_2 = gpath_create(&PF_TIME_COLON_2_INFO);
+				gpath_move_to(PF_TIME_COLON_2, (GPoint){PF_TIME_COLON_X, PF_TIME_DIGIT_Y});
 		}
-		gpath_draw_filled(ctx, PF_TIME_DASH_2);
-		gpath_draw_outline(ctx, PF_TIME_DASH_2);
+		gpath_draw_filled(ctx, PF_TIME_COLON_2);
+		gpath_draw_outline(ctx, PF_TIME_COLON_2);
 
 		// Draw DIGITS
-		draw_time_digit( ctx, time_buffer[0], true, 0 );
+		draw_time_digit( ctx, time_buffer[0],  true, 0 );
 		draw_time_digit( ctx, time_buffer[1], false, 1 );
 		//
 		draw_time_digit( ctx, time_buffer[3], false, 2 );
@@ -185,13 +207,13 @@ void deinit_time () {
 				gpath_destroy(PF_TIME_BORDER);
 				PF_TIME_BORDER = NULL;
 		}
-		if(PF_TIME_DASH_1 != NULL) {
-				gpath_destroy(PF_TIME_DASH_1);
-				PF_TIME_DASH_1 = NULL;
+		if(PF_TIME_COLON_1 != NULL) {
+				gpath_destroy(PF_TIME_COLON_1);
+				PF_TIME_COLON_1 = NULL;
 		}
-		if(PF_TIME_DASH_2 != NULL) {
-				gpath_destroy(PF_TIME_DASH_2);
-				PF_TIME_DASH_2 = NULL;
+		if(PF_TIME_COLON_2 != NULL) {
+				gpath_destroy(PF_TIME_COLON_2);
+				PF_TIME_COLON_2 = NULL;
 		}
 		for( int p = 0; p < PF_TIME_PLACES; p++ ) {
 				for( int s = 0; s < PF_NUM_SEGMENTS; s++ ) {
