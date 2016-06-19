@@ -11,10 +11,6 @@ void init_moon () {
 }
 
 
-void deinit_moon () {
-}
-
-
 void update_moon (struct tm *tick_time, TimeUnits units_changed) {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_battery");
 		layer_mark_dirty(moon_layer);
@@ -198,7 +194,7 @@ void draw_moon (Layer *layer, GContext *ctx) {
 	
 		if( last_moon > -1 ) {
 				last_moon = last_moon % PF_NUM_PHASES;
-				if(PF_MOON_PHASES[last_moon]==NULL) {
+				if(PF_MOON_PHASES[last_moon] == NULL) {
 						PF_MOON_PHASES[last_moon] = gpath_create(&PF_MOON_PHASES_INFO[last_moon]);
 				}
 				graphics_context_set_fill_color(ctx, GColorWhite);
@@ -209,6 +205,20 @@ void draw_moon (Layer *layer, GContext *ctx) {
 
 		graphics_context_set_stroke_color(ctx, scheme.border);
 		gpath_draw_outline(ctx, PF_MOON_BORDER);
+}
+
+
+void deinit_moon () {
+		for( int k = 0; k < PF_NUM_PHASES; k++ ) {
+				if(PF_MOON_PHASES[k] != NULL) {
+						gpath_destroy(PF_MOON_PHASES[k]);
+						PF_MOON_PHASES[k] = NULL;
+				}
+		}
+		if(PF_MOON_BORDER != NULL) {
+				gpath_destroy(PF_MOON_BORDER);
+				PF_MOON_BORDER = NULL;
+		}
 }
 
 

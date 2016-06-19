@@ -15,10 +15,6 @@ void init_btty () {
 }
 
 
-void deinit_btty () {
-}
-
-
 void update_btty (BatteryChargeState charge) {
 		if( (charge_percent != charge.charge_percent)
 			|| (is_plugged != charge.is_plugged)
@@ -135,6 +131,20 @@ void draw_chrg (Layer *layer, GContext *ctx) {
 						gpath_draw_filled(ctx, PF_CHRG_SYMBOL);
 						gpath_draw_outline(ctx, PF_CHRG_SYMBOL);
 				}
+		}
+}
+
+
+void deinit_btty () {
+		for( int k = 0; k < PF_NUM_STATII; k++ ) {
+				if(PF_BTTY_STATII[k] != NULL) {
+						gpath_destroy(PF_BTTY_STATII[k]);
+						PF_BTTY_STATII[k] = NULL;
+				}
+		}
+		if(PF_BTTY_BORDER != NULL) {
+				gpath_destroy(PF_BTTY_BORDER);
+				PF_BTTY_BORDER = NULL;
 		}
 }
 

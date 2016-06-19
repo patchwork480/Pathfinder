@@ -23,10 +23,6 @@ void init_wday () {
 }
 
 
-void deinit_wday () {
-}
-
-
 void update_wday (struct tm *tick_wday, TimeUnits units_changed) {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_wday");
 		layer_mark_dirty(wday_layer);
@@ -103,6 +99,14 @@ void draw_wday (Layer *layer, GContext *ctx) {
 		for( int k = 0; k < PF_WDAY_WID; k++ ) {
 				wday_letter( ctx, wday_buffer[k],
 						PF_WDAY_LETTER_X + (k * PF_WDAY_LETTER_W), PF_WDAY_LETTER_Y );
+		}
+}
+
+
+void deinit_wday () {
+		if(PF_WDAY_BORDER != NULL) {
+				gpath_destroy(PF_WDAY_BORDER);
+				PF_WDAY_BORDER = NULL;
 		}
 }
 

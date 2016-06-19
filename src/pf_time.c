@@ -16,10 +16,6 @@ void init_time () {
 }
 
 
-void deinit_time () {
-}
-
-
 void update_time (struct tm *tick_time, TimeUnits units_changed) {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_battery");
 		layer_mark_dirty(time_layer);
@@ -68,3 +64,12 @@ void draw_time (Layer *layer, GContext *ctx) {
 }
 
 
+void deinit_time () {
+		if(PF_TIME_BORDER != NULL) {
+				gpath_destroy(PF_TIME_BORDER);
+				PF_TIME_BORDER = NULL;
+		}
+}
+
+
+/* EOF */
