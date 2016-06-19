@@ -5,6 +5,7 @@
 #include "pf_date.h"
 #include "pf_wday.h"
 #include "pf_btty.h"
+#include "pf_blue.h"
 #include "pf_moon.h"
 
 
@@ -18,6 +19,7 @@ Layer *wday_layer;
 Layer *btty_layer;
 Layer *plug_layer;
 Layer *chrg_layer;
+Layer *blue_layer;
 Layer *moon_layer;
 
 
@@ -98,6 +100,11 @@ static void main_window_load (Window *window) {
 		layer_set_update_proc(chrg_layer, draw_chrg);
 		layer_add_child(root_layer, chrg_layer);
 
+		// Set the blue layer
+		blue_layer = layer_create(GRect(PF_BLUE_X, PF_BLUE_Y, PF_BLUE_W, PF_BLUE_H));
+		layer_set_update_proc(blue_layer, draw_blue);
+		layer_add_child(root_layer, blue_layer);
+
 		// Force immediate draw
 		time_t now = time(NULL);
 		handle_time_changes(localtime(&now), YEAR_UNIT);
@@ -107,11 +114,16 @@ static void main_window_load (Window *window) {
 		// Subscribe handlers
 		tick_timer_service_subscribe(SECOND_UNIT, handle_time_changes);
 		battery_state_service_subscribe(update_btty);
+        connection_service_subscribe((ConnectionHandlers) {
+            .pebble_app_connection_handler = update_blue_app,
+            .pebblekit_connection_handler = update_blue_kit
+        });
 }
 
 
 static void main_window_unload (Window *window) {
 		// Unsubscribe handlers
+        connection_service_unsubscribe();
 		battery_state_service_unsubscribe();
 		tick_timer_service_unsubscribe();
 		// Destroy the layers
@@ -119,6 +131,9 @@ static void main_window_unload (Window *window) {
 		layer_destroy(date_layer);
 		layer_destroy(wday_layer);
 		layer_destroy(btty_layer);
+		layer_destroy(plug_layer);
+		layer_destroy(chrg_layer);
+		layer_destroy(blue_layer);
 		layer_destroy(moon_layer);
 }
 
@@ -130,6 +145,7 @@ static void init (void) {
 		init_date();
 		init_wday();
 		init_btty();
+		init_blue();
 		init_moon();
 		// Create the window
 		main_window = window_create();
@@ -149,6 +165,7 @@ static void deinit (void) {
 		deinit_date();
 		deinit_wday();
 		deinit_btty();
+		deinit_blue();
 		deinit_moon();
 		// Destroy the window
 		window_destroy(main_window);
