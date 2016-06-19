@@ -1,9 +1,9 @@
 #pragma once
 
 
-#define PF_BLUE_ADJ_Y	(PBL_IF_ROUND_ELSE(7,0))
-#define PF_BLUE_X		(70)
-#define PF_BLUE_Y		(0+PF_BLUE_ADJ_Y)
+#define PF_BLUE_ADJ_Y	(PBL_IF_ROUND_ELSE(5,0))
+#define PF_BLUE_X		(69)
+#define PF_BLUE_Y		(2+PF_BLUE_ADJ_Y)
 #define PF_BLUE_W		(9)
 #define PF_BLUE_H		(9)
 

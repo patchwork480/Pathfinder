@@ -1,4 +1,5 @@
 #include <pebble.h>
+#include "pf_scheme.h"
 #include "pf_blue.h"
 
 
@@ -7,18 +8,20 @@ bool kit_connected;
 
 
 void init_blue () {
-		app_connected = false;
-		kit_connected = false;
+		app_connected = connection_service_peek_pebble_app_connection();
+		kit_connected = connection_service_peek_pebblekit_connection();
 }
 
 
 void update_blue_app (bool connected) {
 		app_connected = connection_service_peek_pebble_app_connection();
+		layer_mark_dirty(blue_layer);
 }
 
 
 void update_blue_kit (bool connected) {
 		kit_connected = connection_service_peek_pebblekit_connection();
+		layer_mark_dirty(blue_layer);
 }
 
 
@@ -38,7 +41,7 @@ void draw_blue (Layer *layer, GContext *ctx) {
 						PF_BLUE_SYMBOL = gpath_create(&PF_BLUE_SYMBOL_INFO);
 				}
 				graphics_context_set_stroke_color(ctx, scheme.foregnd);
-				gpath_draw_outline(ctx, PF_BLUE_SYMBOL);
+				gpath_draw_outline_open(ctx, PF_BLUE_SYMBOL);
 		}
 }
 
