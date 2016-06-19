@@ -2,10 +2,10 @@
 
 
 #define PF_BLUE_ADJ_Y	(PBL_IF_ROUND_ELSE(7,0))
-#define PF_BLUE_X		(24)
-#define PF_BLUE_Y		(119-PF_BLUE_ADJ_Y)
-#define PF_BLUE_W		(96)
-#define PF_BLUE_H		(27)
+#define PF_BLUE_X		(70)
+#define PF_BLUE_Y		(0+PF_BLUE_ADJ_Y)
+#define PF_BLUE_W		(9)
+#define PF_BLUE_H		(9)
 
 
 extern Layer *blue_layer;

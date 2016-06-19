@@ -146,6 +146,18 @@ void deinit_btty () {
 				gpath_destroy(PF_BTTY_BORDER);
 				PF_BTTY_BORDER = NULL;
 		}
+		if(PF_PLUG_SYMBOL != NULL) {
+				gpath_destroy(PF_PLUG_SYMBOL);
+				PF_PLUG_SYMBOL = NULL;
+		}
+		if(PF_CHRG_SYMBOL != NULL) {
+				gpath_destroy(PF_CHRG_SYMBOL);
+				PF_CHRG_SYMBOL = NULL;
+		}
+		if(PF_CMPL_SYMBOL != NULL) {
+				gpath_destroy(PF_CMPL_SYMBOL);
+				PF_CMPL_SYMBOL = NULL;
+		}
 }
 
 

@@ -114,16 +114,16 @@ static void main_window_load (Window *window) {
 		// Subscribe handlers
 		tick_timer_service_subscribe(SECOND_UNIT, handle_time_changes);
 		battery_state_service_subscribe(update_btty);
-        connection_service_subscribe((ConnectionHandlers) {
-            .pebble_app_connection_handler = update_blue_app,
-            .pebblekit_connection_handler = update_blue_kit
-        });
+		connection_service_subscribe((ConnectionHandlers) {
+			.pebble_app_connection_handler = update_blue_app,
+			.pebblekit_connection_handler = update_blue_kit
+		});
 }
 
 
 static void main_window_unload (Window *window) {
 		// Unsubscribe handlers
-        connection_service_unsubscribe();
+		connection_service_unsubscribe();
 		battery_state_service_unsubscribe();
 		tick_timer_service_unsubscribe();
 		// Destroy the layers
