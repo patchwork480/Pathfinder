@@ -4,7 +4,7 @@
 #include "pf_date.h"
 
 
-#define PF_NUM_PLACES		(6)
+#define PF_DATE_PLACES		(6)
 
 #define PF_DATE_DIGIT_Y		(3)
 #define PF_DATE_DIGIT_1_X	(6)
@@ -17,7 +17,7 @@
 #define PF_DATE_DIGIT_6_X	(PF_DATE_DIGIT_5_X + 13)
 
 
-char date_buffer[12];
+char date_buffer[9];
 int last_year;
 int last_mon;
 int last_mday;
@@ -55,7 +55,7 @@ const GPathInfo PF_DATE_DASH_INFO = {
 } };
 
 
-GPoint PF_DATE_XY[PF_NUM_PLACES] = {
+GPoint PF_DATE_XY[PF_DATE_PLACES] = {
 		{PF_DATE_DIGIT_1_X, PF_DATE_DIGIT_Y},
 		{PF_DATE_DIGIT_2_X, PF_DATE_DIGIT_Y},
 		{PF_DATE_DIGIT_3_X, PF_DATE_DIGIT_Y},
@@ -65,7 +65,7 @@ GPoint PF_DATE_XY[PF_NUM_PLACES] = {
 };
 
 
-GPath *PF_DATE_SEGMENTS[PF_NUM_PLACES][PF_NUM_SEGMENTS] = {
+GPath *PF_DATE_SEGMENTS[PF_DATE_PLACES][PF_NUM_SEGMENTS] = {
 		{NULL,NULL,NULL,NULL,NULL,NULL,NULL},
 		{NULL,NULL,NULL,NULL,NULL,NULL,NULL},
 		{NULL,NULL,NULL,NULL,NULL,NULL,NULL},
@@ -101,14 +101,14 @@ const GPathInfo PF_DATE_SEGMENTS_INFO[PF_NUM_SEGMENTS] = {
 
 
 void draw_date_glyph (GContext *ctx, bool segments[PF_NUM_SEGMENTS], int place) {
-		for( int k =0; k < PF_NUM_SEGMENTS; k++ ) {
-				if(segments[k]) {
-						if(PF_DATE_SEGMENTS[place][k]==NULL) {
-								PF_DATE_SEGMENTS[place][k] = gpath_create(&PF_DATE_SEGMENTS_INFO[k]);
-								gpath_move_to(PF_DATE_SEGMENTS[place][k], PF_DATE_XY[place]);
+		for( int s = 0; s < PF_NUM_SEGMENTS; s++ ) {
+				if(segments[s]) {
+						if(PF_DATE_SEGMENTS[place][s]==NULL) {
+								PF_DATE_SEGMENTS[place][s] = gpath_create(&PF_DATE_SEGMENTS_INFO[s]);
+								gpath_move_to(PF_DATE_SEGMENTS[place][s], PF_DATE_XY[place]);
 						}
-						gpath_draw_filled(ctx, PF_DATE_SEGMENTS[place][k]);
-						gpath_draw_outline(ctx, PF_DATE_SEGMENTS[place][k]);
+						gpath_draw_filled(ctx, PF_DATE_SEGMENTS[place][s]);
+						gpath_draw_outline(ctx, PF_DATE_SEGMENTS[place][s]);
 				}
 		}
 }
@@ -179,6 +179,14 @@ void deinit_date () {
 		if(PF_DATE_DASH_2 != NULL) {
 				gpath_destroy(PF_DATE_DASH_2);
 				PF_DATE_DASH_2 = NULL;
+		}
+		for( int p = 0; p < PF_DATE_PLACES; p++ ) {
+				for( int s = 0; s < PF_NUM_SEGMENTS; s++ ) {
+						if(PF_DATE_SEGMENTS[p][s] != NULL) {
+								gpath_destroy(PF_DATE_SEGMENTS[p][s]);
+								PF_DATE_SEGMENTS[p][s] = NULL;
+						}
+				}
 		}
 }
 

@@ -52,9 +52,6 @@ static void handle_time_changes (struct tm *tick_time, TimeUnits units_changed) 
 						strftime(time_buffer, sizeof(time_buffer), "%k:%M:%S", tick_time);
 				} else {
 						strftime(time_buffer, sizeof(time_buffer), "%I:%M:%S", tick_time);
-						if(time_buffer[0]=='0') {
-								time_buffer[0] = ' ';
-						}
 				}
 
 				snprintf(message_buffer, sizeof(message_buffer), "HMS: %d:%d:%d",

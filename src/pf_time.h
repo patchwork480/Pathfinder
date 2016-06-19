@@ -11,7 +11,7 @@ extern Layer *time_layer;
 extern char message_buffer[64];
 
 
-extern char time_buffer[12];
+extern char time_buffer[9];
 extern int last_hour;
 extern int last_min;
 extern int last_sec;
