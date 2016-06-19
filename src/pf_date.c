@@ -3,6 +3,20 @@
 #include "pf_date.h"
 
 
+#define PF_NUM_DIGITS		(10)
+#define PF_NUM_SEGMENTS		(7)
+
+#define PF_DATE_DIGIT_Y		(3)
+#define PF_DATE_DIGIT_1_X	(6)
+#define PF_DATE_DIGIT_2_X	(PF_DATE_DIGIT_1_X + 13)
+#define PF_DATE_DASH_1_X	(PF_DATE_DIGIT_2_X +  9)
+#define PF_DATE_DIGIT_3_X	(PF_DATE_DIGIT_2_X + 17)
+#define PF_DATE_DIGIT_4_X	(PF_DATE_DIGIT_3_X + 13)
+#define PF_DATE_DASH_2_X	(PF_DATE_DIGIT_4_X +  9)
+#define PF_DATE_DIGIT_5_X	(PF_DATE_DIGIT_4_X + 17)
+#define PF_DATE_DIGIT_6_X	(PF_DATE_DIGIT_5_X + 13)
+
+
 char date_buffer[12];
 int last_year;
 int last_mon;
@@ -22,6 +36,19 @@ void update_date (struct tm *tick_date, TimeUnits units_changed) {
 }
 
 
+bool DIGIT_SEGS[PF_NUM_DIGITS][PF_NUM_SEGMENTS] = {
+		{  true,  true,  true,  true,  true,  true, false },
+		{ false,  true,  true, false, false, false, false },
+		{  true,  true, false,  true,  true, false,  true },
+		{  true,  true,  true,  true, false, false, false },
+		{ false,  true,  true, false, false,  true,  true },
+		{  true, false,  true,  true, false, false,  true },
+		{  true, false,  true,  true,  true,  true,  true },
+		{  true,  true,  true, false, false, false, false },
+		{  true,  true,  true,  true,  true,  true,  true },
+		{  true,  true,  true,  true, false,  true,  true }
+};
+
 
 GPath *PF_DATE_BORDER = NULL;
 const GPathInfo PF_DATE_BORDER_INFO = {
@@ -31,6 +58,28 @@ const GPathInfo PF_DATE_BORDER_INFO = {
 			{4,26}, {3,25}, {2,24}, {1,23}, {1,14}, {0,13}, {1,12}, {1,3}, {2,2}, {3,1}, {4,0}
 } };
 
+
+
+void draw_date_glyph (GContext *ctx, bool segments[PF_NUM_SEGMENTS], int place, int x, int y) {
+		for( int k =0; k < PF_NUM_SEGMENTS; k++ ) {
+				if(segments[k]) {
+				}
+		}
+}
+
+
+void draw_date_digit (GContext *ctx, char digit, bool zero, int place, int x, int y) {
+		if( (digit == '0') && zero ){
+				return;
+		}
+		int index = ((int)digit) - ((int)'0');
+		if( (index < 0) || (index >= PF_NUM_DIGITS) ){
+				return;
+		}
+		bool segments[PF_NUM_SEGMENTS];
+		(*segments) = DIGIT_SEGS[index];
+		draw_date_glyph(*ctx, segments, place, x, y);
+}
 
 
 void draw_date (Layer *layer, GContext *ctx) {
@@ -44,22 +93,23 @@ void draw_date (Layer *layer, GContext *ctx) {
 				date_buffer);
 		APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
 
-		// graphics_context_set_fill_color(ctx, PF_BACKGND);
-		// graphics_fill_rect(ctx, bounds, 0, GCornerNone);
-
 		if(PF_DATE_BORDER==NULL) {
 				PF_DATE_BORDER = gpath_create(&PF_DATE_BORDER_INFO);
 		}
 		graphics_context_set_stroke_color(ctx, scheme.border);
 		gpath_draw_outline(ctx, PF_DATE_BORDER);
 
-		graphics_context_set_text_color(ctx, scheme.foregnd);
-		graphics_draw_text(ctx, date_buffer,
-						fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD),
-						bounds,
-						GTextOverflowModeWordWrap,
-						GTextAlignmentCenter,
-						NULL);
+		graphics_context_set_stroke_color(ctx, scheme.foregnd);
+		graphics_context_set_fill_color(ctx, scheme.foregnd);
+
+		draw_date_digit( ctx, date_buffer[0],	false,	0, PF_DATE_DIGIT_1_X, PF_DATE_DIGIT_Y );
+		draw_date_digit( ctx, date_buffer[1],	false,	1, PF_DATE_DIGIT_2_X, PF_DATE_DIGIT_Y );
+		draw_date_glyph( ctx, PF_DATE_DASH,	PF_DATE_DASH_1_X, PF_DATE_DIGIT_Y );
+		draw_date_digit( ctx, date_buffer[3],	 true,	2, PF_DATE_DIGIT_3_X, PF_DATE_DIGIT_Y );
+		draw_date_digit( ctx, date_buffer[4],	false,	3, PF_DATE_DIGIT_4_X, PF_DATE_DIGIT_Y );
+		draw_date_glyph( ctx, PF_DATE_DASH,	PF_DATE_DASH_2_X, PF_DATE_DIGIT_Y );
+		draw_date_digit( ctx, date_buffer[6],	 true,	4, PF_DATE_DIGIT_5_X, PF_DATE_DIGIT_Y );
+		draw_date_digit( ctx, date_buffer[7],	false,	5, PF_DATE_DIGIT_6_X, PF_DATE_DIGIT_Y );
 }
 
 

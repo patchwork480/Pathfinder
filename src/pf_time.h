@@ -1,10 +1,10 @@
 #pragma once
 
 
-#define PF_TIME_X		0
-#define PF_TIME_Y		60
-#define PF_TIME_W		144
-#define PF_TIME_H		49
+#define PF_TIME_X		(0)
+#define PF_TIME_Y		(60)
+#define PF_TIME_W		(144)
+#define PF_TIME_H		(49)
 
 
 extern Layer *time_layer;

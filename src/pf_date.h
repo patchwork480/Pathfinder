@@ -1,11 +1,11 @@
 #pragma once
 
 
-#define PF_DATE_ADJ_Y	PBL_IF_ROUND_ELSE(7,0)
-#define PF_DATE_X		24
-#define PF_DATE_Y		119-PF_DATE_ADJ_Y
-#define PF_DATE_W		96
-#define PF_DATE_H		27
+#define PF_DATE_ADJ_Y	(PBL_IF_ROUND_ELSE(7,0))
+#define PF_DATE_X		(24)
+#define PF_DATE_Y		(119-PF_DATE_ADJ_Y)
+#define PF_DATE_W		(96)
+#define PF_DATE_H		(27)
 
 
 extern Layer *date_layer;
