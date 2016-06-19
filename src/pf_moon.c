@@ -1,5 +1,5 @@
 #include <pebble.h>
-#include "all.h"
+#include "pf_scheme.h"
 #include "pf_moon.h"
 
 char moon_buffer[12];
@@ -189,21 +189,25 @@ const GPathInfo PF_MOON_PHASES_INFO[PF_NUM_PHASES] = {
 
 
 void draw_moon (Layer *layer, GContext *ctx) {
-		if( last_moon > -1 ) {
+		if(PF_MOON_BORDER==NULL) {
+				PF_MOON_BORDER = gpath_create(&PF_MOON_BORDER_INFO);
+		}
+
+ 		graphics_context_set_fill_color(ctx, GColorBlack);
+		gpath_draw_filled(ctx, PF_MOON_BORDER);
+    
+       if( last_moon > -1 ) {
 				last_moon = last_moon % PF_NUM_PHASES;
 				if(PF_MOON_PHASES[last_moon]==NULL) {
 						PF_MOON_PHASES[last_moon] = gpath_create(&PF_MOON_PHASES_INFO[last_moon]);
 				}
-				graphics_context_set_fill_color(ctx, PF_FOREGND);
-				graphics_context_set_stroke_color(ctx, PF_FOREGND);
+				graphics_context_set_fill_color(ctx, GColorWhite);
+				graphics_context_set_stroke_color(ctx, GColorWhite);
 				gpath_draw_filled(ctx, PF_MOON_PHASES[last_moon]);
 				gpath_draw_outline(ctx, PF_MOON_PHASES[last_moon]);
 		}
 
-		if(PF_MOON_BORDER==NULL) {
-				PF_MOON_BORDER = gpath_create(&PF_MOON_BORDER_INFO);
-		}
-		graphics_context_set_stroke_color(ctx, PF_BORDER);
+		graphics_context_set_stroke_color(ctx, scheme.border);
 		gpath_draw_outline(ctx, PF_MOON_BORDER);
 }
 

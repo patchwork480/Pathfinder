@@ -1,5 +1,5 @@
 #include <pebble.h>
-#include "all.h"
+#include "pf_scheme.h"
 #include "pf_date.h"
 
 
@@ -54,10 +54,10 @@ void draw_date (Layer *layer, GContext *ctx) {
 		if(PF_DATE_BORDER==NULL) {
 				PF_DATE_BORDER = gpath_create(&PF_DATE_BORDER_INFO);
 		}
-		graphics_context_set_stroke_color(ctx, PF_BORDER);
+		graphics_context_set_stroke_color(ctx, scheme.border);
 		gpath_draw_outline(ctx, PF_DATE_BORDER);
 
-		graphics_context_set_text_color(ctx, PF_FOREGND);
+		graphics_context_set_text_color(ctx, scheme.foregnd);
 		graphics_draw_text(ctx, date_buffer,
 						fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD),
 						bounds,

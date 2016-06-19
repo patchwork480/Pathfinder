@@ -1,5 +1,5 @@
 #include <pebble.h>
-#include "all.h"
+#include "pf_scheme.h"
 #include "pf_btty.h"
 
 
@@ -59,15 +59,15 @@ void draw_btty (Layer *layer, GContext *ctx) {
 		if(PF_BTTY_BORDER==NULL) {
 				PF_BTTY_BORDER = gpath_create(&PF_BTTY_BORDER_INFO);
 		}
-		graphics_context_set_stroke_color(ctx, PF_BORDER);
+		graphics_context_set_stroke_color(ctx, scheme.border);
 		gpath_draw_outline(ctx, PF_BTTY_BORDER);
 
 		int btty_status = charge_percent / PF_STATUS_WID;
 		if(PF_BTTY_STATII[btty_status]==NULL) {
 				PF_BTTY_STATII[btty_status] = gpath_create(&PF_BTTY_STATII_INFO[btty_status]);
 		}
-		graphics_context_set_fill_color(ctx, PF_FOREGND);
-		graphics_context_set_stroke_color(ctx, PF_FOREGND);
+		graphics_context_set_fill_color(ctx, scheme.foregnd);
+		graphics_context_set_stroke_color(ctx, scheme.foregnd);
 		gpath_draw_filled(ctx, PF_BTTY_STATII[btty_status]);
 		gpath_draw_outline(ctx, PF_BTTY_STATII[btty_status]);
 }
@@ -89,8 +89,8 @@ void draw_plug (Layer *layer, GContext *ctx) {
 				if(PF_PLUG_SYMBOL==NULL) {
 						PF_PLUG_SYMBOL = gpath_create(&PF_PLUG_SYMBOL_INFO);
 				}
-				graphics_context_set_fill_color(ctx, PF_FOREGND);
-				graphics_context_set_stroke_color(ctx, PF_FOREGND);
+				graphics_context_set_fill_color(ctx, scheme.foregnd);
+				graphics_context_set_stroke_color(ctx, scheme.foregnd);
 				gpath_draw_filled(ctx, PF_PLUG_SYMBOL);
 				gpath_draw_outline(ctx, PF_PLUG_SYMBOL);
 		}
@@ -122,16 +122,16 @@ void draw_chrg (Layer *layer, GContext *ctx) {
 						if(PF_CMPL_SYMBOL==NULL) {
 								PF_CMPL_SYMBOL = gpath_create(&PF_CMPL_SYMBOL_INFO);
 						}
-						graphics_context_set_fill_color(ctx, PF_FOREGND);
-						graphics_context_set_stroke_color(ctx, PF_FOREGND);
+						graphics_context_set_fill_color(ctx, scheme.foregnd);
+						graphics_context_set_stroke_color(ctx, scheme.foregnd);
 						gpath_draw_filled(ctx, PF_CMPL_SYMBOL);
 						gpath_draw_outline(ctx, PF_CMPL_SYMBOL);
 				} else if(is_charging) {
 						if(PF_CHRG_SYMBOL==NULL) {
 								PF_CHRG_SYMBOL = gpath_create(&PF_CHRG_SYMBOL_INFO);
 						}
-						graphics_context_set_fill_color(ctx, PF_FOREGND);
-						graphics_context_set_stroke_color(ctx, PF_FOREGND);
+						graphics_context_set_fill_color(ctx, scheme.foregnd);
+						graphics_context_set_stroke_color(ctx, scheme.foregnd);
 						gpath_draw_filled(ctx, PF_CHRG_SYMBOL);
 						gpath_draw_outline(ctx, PF_CHRG_SYMBOL);
 				}

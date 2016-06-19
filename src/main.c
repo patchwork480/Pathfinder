@@ -1,5 +1,5 @@
 #include <pebble.h>
-#include "all.h"
+#include "pf_scheme.h"
 #include "pf_time.h"
 #include "pf_date.h"
 #include "pf_wday.h"
@@ -130,18 +130,13 @@ static void main_window_unload (Window *window) {
 		layer_destroy(wday_layer);
 		layer_destroy(btty_layer);
 		layer_destroy(moon_layer);
-		// De-init the models
-        deinit_time();
-        deinit_date();
-        deinit_wday();
-        deinit_btty();
-        deinit_moon();
 }
 
 
 static void init (void) {
 		// Init the models
-		init_time();
+        scheme_light_on_dark(&scheme);
+        init_time();
 		init_date();
 		init_wday();
 		init_btty();
@@ -159,6 +154,12 @@ static void init (void) {
 
 
 static void deinit (void) {
+		// De-init the models
+        deinit_time();
+        deinit_date();
+        deinit_wday();
+        deinit_btty();
+        deinit_moon();
 		// Destroy the window
 		window_destroy(main_window);
 }

@@ -1,5 +1,5 @@
 #include <pebble.h>
-#include "all.h"
+#include "pf_scheme.h"
 #include "pf_wday.h"
 
 
@@ -95,10 +95,10 @@ void draw_wday (Layer *layer, GContext *ctx) {
 		if(PF_WDAY_BORDER==NULL) {
 				PF_WDAY_BORDER = gpath_create(&PF_WDAY_BORDER_INFO);
 		}
-		graphics_context_set_stroke_color(ctx, PF_BORDER);
+		graphics_context_set_stroke_color(ctx, scheme.border);
 		gpath_draw_outline(ctx, PF_WDAY_BORDER);
 
-		graphics_context_set_stroke_color(ctx, PF_FOREGND);
+		graphics_context_set_stroke_color(ctx, scheme.foregnd);
 
 		for( int k = 0; k < PF_WDAY_WID; k++ ) {
 				wday_letter( ctx, wday_buffer[k],

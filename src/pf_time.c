@@ -1,5 +1,5 @@
 #include <pebble.h>
-#include "all.h"
+#include "pf_scheme.h"
 #include "pf_time.h"
 
 
@@ -55,10 +55,10 @@ void draw_time (Layer *layer, GContext *ctx) {
 		if(PF_TIME_BORDER==NULL) {
 				PF_TIME_BORDER = gpath_create(&PF_TIME_BORDER_INFO);
 		}
-		graphics_context_set_stroke_color(ctx, PF_BORDER);
+		graphics_context_set_stroke_color(ctx, scheme.border);
 		gpath_draw_outline(ctx, PF_TIME_BORDER);
 
-		graphics_context_set_text_color(ctx, PF_FOREGND);
+		graphics_context_set_text_color(ctx, scheme.foregnd);
 		graphics_draw_text(ctx, time_buffer,
 						fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD),
 						bounds,
