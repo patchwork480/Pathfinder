@@ -1,10 +1,9 @@
 #include <pebble.h>
 #include "pf_scheme.h"
+#include "pf_util.h"
 #include "pf_date.h"
 
 
-#define PF_NUM_DIGITS		(10)
-#define PF_NUM_SEGMENTS		(7)
 #define PF_NUM_PLACES		(6)
 
 #define PF_DATE_DIGIT_Y		(3)
@@ -56,21 +55,7 @@ const GPathInfo PF_DATE_DASH_INFO = {
 } };
 
 
-bool DIGIT_SEGS[PF_NUM_DIGITS][PF_NUM_SEGMENTS] = {
-		{  true,  true,  true,  true,  true,  true, false },
-		{ false,  true,  true, false, false, false, false },
-		{  true,  true, false,  true,  true, false,  true },
-		{  true,  true,  true,  true, false, false, false },
-		{ false,  true,  true, false, false,  true,  true },
-		{  true, false,  true,  true, false, false,  true },
-		{  true, false,  true,  true,  true,  true,  true },
-		{  true,  true,  true, false, false, false, false },
-		{  true,  true,  true,  true,  true,  true,  true },
-		{  true,  true,  true,  true, false,  true,  true }
-};
-
-
-int PF_DATE_XY[PF_NUM_PLACES][2] = {
+GPoint PF_DATE_XY[PF_NUM_PLACES] = {
 		{PF_DATE_DIGIT_1_X, PF_DATE_DIGIT_Y},
 		{PF_DATE_DIGIT_2_X, PF_DATE_DIGIT_Y},
 		{PF_DATE_DIGIT_3_X, PF_DATE_DIGIT_Y},
@@ -119,8 +104,8 @@ void draw_date_glyph (GContext *ctx, bool segments[PF_NUM_SEGMENTS], int place) 
 		for( int k =0; k < PF_NUM_SEGMENTS; k++ ) {
 				if(segments[k]) {
 						if(PF_DATE_SEGMENTS[place][k]==NULL) {
-								PF_DATE_SEGMENTS[place][k] = gpath_create(&PF_DATE_DASH_INFO);
-								gpath_move_to(PF_DATE_SEGMENTS[place][k], (GPoint){PF_DATE_XY[place][0], PF_DATE_XY[place][1]});
+								PF_DATE_SEGMENTS[place][k] = gpath_create(&PF_DATE_SEGMENTS_INFO[k]);
+								gpath_move_to(PF_DATE_SEGMENTS[place][k], PF_DATE_XY[place]);
 						}
 						gpath_draw_filled(ctx, PF_DATE_SEGMENTS[place][k]);
 						gpath_draw_outline(ctx, PF_DATE_SEGMENTS[place][k]);
@@ -137,22 +122,11 @@ void draw_date_digit (GContext *ctx, char digit, bool zero, int place) {
 		if( (index < 0) || (index >= PF_NUM_DIGITS) ){
 				return;
 		}
-		bool segments[PF_NUM_SEGMENTS];
-		(*segments) = &DIGIT_SEGS[index];
-		draw_date_glyph(ctx, segments, place);
+		draw_date_glyph(ctx, DIGIT_SEGS[index], place);
 }
 
 
 void draw_date (Layer *layer, GContext *ctx) {
-		GRect bounds = layer_get_bounds(layer);
-		snprintf(message_buffer, sizeof(message_buffer), "draw_date: %d,%d:%dx%d (%s)",
-				bounds.origin.x, bounds.origin.y, bounds.size.w, bounds.size.h,
-				layer_get_hidden(layer) ? "true" : "false");
-		APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
-
-		snprintf(message_buffer, sizeof(message_buffer), " - Drawing: ``%s''",
-				date_buffer);
-		APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
 
 		// Draw BORDER
 		if(PF_DATE_BORDER==NULL) {
@@ -182,14 +156,14 @@ void draw_date (Layer *layer, GContext *ctx) {
 		gpath_draw_outline(ctx, PF_DATE_DASH_2);
 
 		// Draw DIGITS
-		draw_date_digit( ctx, date_buffer[0],	false,	0 );
-		draw_date_digit( ctx, date_buffer[1],	false,	1 );
+		draw_date_digit( ctx, date_buffer[0], false, 0 );
+		draw_date_digit( ctx, date_buffer[1], false, 1 );
 		//
-		draw_date_digit( ctx, date_buffer[3],	 true,	2 );
-		draw_date_digit( ctx, date_buffer[4],	false,	3 );
+		draw_date_digit( ctx, date_buffer[3], true, 2 );
+		draw_date_digit( ctx, date_buffer[4], false, 3 );
 		//
-		draw_date_digit( ctx, date_buffer[6],	 true,	4 );
-		draw_date_digit( ctx, date_buffer[7],	false,	5 );
+		draw_date_digit( ctx, date_buffer[6], true, 4 );
+		draw_date_digit( ctx, date_buffer[7], false, 5 );
 }
 
 

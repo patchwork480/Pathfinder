@@ -18,17 +18,6 @@ char wday_buffer[12];
 int last_wday;
 
 
-char *strupr (char *str) {
-		char *s;
-		for(s = str; *s; s++) {
-				if(('a' <= *s) && (*s <= 'z')) {
-						*s = 'A' + (*s - 'a');
-				}
-		}
-		return str;
-}
-
-
 void init_wday () {
 		last_wday = -1;
 }

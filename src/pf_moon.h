@@ -18,6 +18,10 @@ extern char message_buffer[64];
 
 extern char moon_buffer[12];
 extern int last_moon;
+extern int jul_date;
+
+
+extern int julian_date (int year, int month, int day);
 
 
 extern void init_moon ();

@@ -4,6 +4,12 @@
 
 char moon_buffer[12];
 int last_moon;
+int jul_date;
+
+
+int julian_date (int year, int month, int day) {
+		return year + month + day;
+}
 
 
 void init_moon () {

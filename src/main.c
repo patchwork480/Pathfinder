@@ -1,5 +1,6 @@
 #include <pebble.h>
 #include "pf_scheme.h"
+#include "pf_util.h"
 #include "pf_time.h"
 #include "pf_date.h"
 #include "pf_wday.h"
@@ -36,7 +37,8 @@ static void handle_time_changes (struct tm *tick_time, TimeUnits units_changed) 
 						last_year, last_mon, last_mday, last_wday);
 				APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
 
-				last_moon = tick_time->tm_mday;
+				jul_date = julian_date(last_year, last_mon, last_mday);
+				last_moon = jul_date % PF_NUM_PHASES;
 
 				layer_mark_dirty(date_layer);
 				layer_mark_dirty(wday_layer);
