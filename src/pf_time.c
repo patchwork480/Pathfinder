@@ -16,6 +16,10 @@ void init_time () {
 }
 
 
+void deinit_time () {
+}
+
+
 void update_time (struct tm *tick_time, TimeUnits units_changed) {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_battery");
 		layer_mark_dirty(time_layer);

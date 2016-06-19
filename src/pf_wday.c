@@ -23,6 +23,10 @@ void init_wday () {
 }
 
 
+void deinit_wday () {
+}
+
+
 void update_wday (struct tm *tick_wday, TimeUnits units_changed) {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_wday");
 		layer_mark_dirty(wday_layer);

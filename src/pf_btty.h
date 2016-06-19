@@ -36,6 +36,7 @@ extern bool last_plugged;
 extern bool last_charging;
 
 extern void init_btty ();
+extern void deinit_btty ();
 extern void update_btty (BatteryChargeState charge);
 extern void draw_btty (Layer *layer, GContext *ctx);
 extern void draw_plug (Layer *layer, GContext *ctx);

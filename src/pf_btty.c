@@ -15,6 +15,10 @@ void init_btty () {
 }
 
 
+void deinit_btty () {
+}
+
+
 void update_btty (BatteryChargeState charge) {
 		if( (charge_percent != charge.charge_percent)
 			|| (is_plugged != charge.is_plugged)

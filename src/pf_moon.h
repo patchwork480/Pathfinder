@@ -21,6 +21,7 @@ extern int last_moon;
 
 
 extern void init_moon ();
+extern void deinit_moon ();
 extern void update_moon (struct tm *tick_moon, TimeUnits units_changed);
 extern void draw_moon (Layer *layer, GContext *ctx);
 

@@ -16,6 +16,10 @@ void init_date () {
 }
 
 
+void deinit_date () {
+}
+
+
 void update_date (struct tm *tick_date, TimeUnits units_changed) {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_date");
 		layer_mark_dirty(date_layer);

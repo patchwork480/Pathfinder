@@ -130,6 +130,12 @@ static void main_window_unload (Window *window) {
 		layer_destroy(wday_layer);
 		layer_destroy(btty_layer);
 		layer_destroy(moon_layer);
+		// De-init the models
+        deinit_time();
+        deinit_date();
+        deinit_wday();
+        deinit_btty();
+        deinit_moon();
 }
 
 

@@ -18,6 +18,7 @@ extern int last_sec;
 
 
 extern void init_time ();
+extern void deinit_time ();
 extern void update_time (struct tm *tick_time, TimeUnits units_changed);
 extern void draw_time (Layer *layer, GContext *ctx);
 
