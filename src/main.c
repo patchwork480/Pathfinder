@@ -68,7 +68,7 @@ static void main_window_load (Window *window) {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "main_window_load");
 
 		// Set Window Background
-		window_set_background_color(window, GColorWhite);
+		window_set_background_color(window, scheme.backgnd);
 
 		// Get Root Layer of Window
 		Layer *root_layer = window_get_root_layer(window);
