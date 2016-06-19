@@ -195,8 +195,8 @@ void draw_moon (Layer *layer, GContext *ctx) {
 
  		graphics_context_set_fill_color(ctx, GColorBlack);
 		gpath_draw_filled(ctx, PF_MOON_BORDER);
-    
-       if( last_moon > -1 ) {
+	
+		if( last_moon > -1 ) {
 				last_moon = last_moon % PF_NUM_PHASES;
 				if(PF_MOON_PHASES[last_moon]==NULL) {
 						PF_MOON_PHASES[last_moon] = gpath_create(&PF_MOON_PHASES_INFO[last_moon]);

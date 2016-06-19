@@ -135,8 +135,8 @@ static void main_window_unload (Window *window) {
 
 static void init (void) {
 		// Init the models
-        scheme_light_on_dark(&scheme);
-        init_time();
+		scheme_light_on_dark(&scheme);
+		init_time();
 		init_date();
 		init_wday();
 		init_btty();
@@ -155,11 +155,11 @@ static void init (void) {
 
 static void deinit (void) {
 		// De-init the models
-        deinit_time();
-        deinit_date();
-        deinit_wday();
-        deinit_btty();
-        deinit_moon();
+		deinit_time();
+		deinit_date();
+		deinit_wday();
+		deinit_btty();
+		deinit_moon();
 		// Destroy the window
 		window_destroy(main_window);
 }
