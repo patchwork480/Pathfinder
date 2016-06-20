@@ -1,5 +1,6 @@
 #include <pebble.h>
 #include "pf_scheme.h"
+#include "pf_time.h"
 #include "pf_btty.h"
 
 
@@ -61,8 +62,13 @@ void draw_btty (Layer *layer, GContext *ctx) {
 		if(PF_BTTY_STATII[btty_status] == NULL) {
 				PF_BTTY_STATII[btty_status] = gpath_create(&PF_BTTY_STATII_INFO[btty_status]);
 		}
-		graphics_context_set_fill_color(ctx, scheme.foregnd);
-		graphics_context_set_stroke_color(ctx, scheme.foregnd);
+		if( (btty_status == 0) && ((pf_sec % 2) == 0) ) {
+				graphics_context_set_fill_color(ctx, scheme.backgnd);
+				graphics_context_set_stroke_color(ctx, scheme.backgnd);
+		} else {
+				graphics_context_set_fill_color(ctx, scheme.foregnd);
+				graphics_context_set_stroke_color(ctx, scheme.foregnd);
+		}
 		gpath_draw_filled(ctx, PF_BTTY_STATII[btty_status]);
 		gpath_draw_outline(ctx, PF_BTTY_STATII[btty_status]);
 }
