@@ -22,9 +22,9 @@
 
 
 char time_buffer[9];
-int pf_hour;
-int pf_min;
-int pf_sec;
+int8_t pf_hour;
+int8_t pf_min;
+int8_t pf_sec;
 
 
 void init_time () {
@@ -124,8 +124,8 @@ const GPathInfo PF_TIME_SEGMENTS_SM_INFO[PF_NUM_SEGMENTS] = {
 };
 
 
-void draw_time_glyph (GContext *ctx, bool segments[PF_NUM_SEGMENTS], int place) {
-		for( int s = 0; s < PF_NUM_SEGMENTS; s++ ) {
+void draw_time_glyph (GContext *ctx, bool segments[PF_NUM_SEGMENTS], int8_t place) {
+		for( uint8_t s = 0; s < PF_NUM_SEGMENTS; s++ ) {
 				if(segments[s]) {
 						if(PF_TIME_SEGMENTS[place][s] == NULL) {
 								if( (place==4) || (place==5) ) {
@@ -142,11 +142,11 @@ void draw_time_glyph (GContext *ctx, bool segments[PF_NUM_SEGMENTS], int place) 
 }
 
 
-void draw_time_digit (GContext *ctx, char digit, bool zero, int place) {
+void draw_time_digit (GContext *ctx, char digit, bool zero, int8_t place) {
 		if( (digit == '0') && zero ){
 				return;
 		}
-		int index = ((int)digit) - ((int)'0');
+		int8_t index = ((int)digit) - ((int)'0');
 		if( (index < 0) || (index >= PF_NUM_DIGITS) ){
 				return;
 		}
@@ -208,8 +208,8 @@ void deinit_time () {
 				gpath_destroy(PF_TIME_COLON_2);
 				PF_TIME_COLON_2 = NULL;
 		}
-		for( int p = 0; p < PF_TIME_PLACES; p++ ) {
-				for( int s = 0; s < PF_NUM_SEGMENTS; s++ ) {
+		for( uint8_t p = 0; p < PF_TIME_PLACES; p++ ) {
+				for( uint8_t s = 0; s < PF_NUM_SEGMENTS; s++ ) {
 						if(PF_TIME_SEGMENTS[p][s] != NULL) {
 								gpath_destroy(PF_TIME_SEGMENTS[p][s]);
 								PF_TIME_SEGMENTS[p][s] = NULL;

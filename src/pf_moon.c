@@ -3,7 +3,7 @@
 #include "pf_moon.h"
 
 
-int pf_moon;
+int8_t pf_moon;
 
 
 void init_moon () {
@@ -202,7 +202,7 @@ void draw_moon (Layer *layer, GContext *ctx) {
 
 
 void deinit_moon () {
-		for( int k = 0; k < PF_NUM_PHASES; k++ ) {
+		for( uint8_t k = 0; k < PF_NUM_PHASES; k++ ) {
 				if(PF_MOON_PHASES[k] != NULL) {
 						gpath_destroy(PF_MOON_PHASES[k]);
 						PF_MOON_PHASES[k] = NULL;

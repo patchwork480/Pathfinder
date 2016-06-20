@@ -12,9 +12,9 @@ extern Layer *date_layer;
 
 
 extern char date_buffer[9];
-extern int pf_year;
-extern int pf_mon;
-extern int pf_mday;
+extern int16_t pf_year;
+extern int8_t pf_mon;
+extern int8_t pf_mday;
 
 
 extern void init_date ();

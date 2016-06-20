@@ -15,7 +15,7 @@
 
 
 char wday_buffer[4];
-int pf_wday;
+int8_t pf_wday;
 
 
 void init_wday () {
@@ -63,11 +63,11 @@ const char *PF_WDAY_LETTERS[26][PF_GLYPH_ROWS] = {
 };
 
 
-void wday_letter (GContext *ctx, const char letter, const int x, const int y ) {
-		int index = ((int)letter) - ((int)'A');
-		int px, py;
-		for( int r = 0; r < PF_GLYPH_ROWS; r++ ) {
-				for( int c = 0; c < PF_GLYPH_ROW_WID; c++ ) {
+void wday_letter (GContext *ctx, const char letter, const uint8_t x, const uint8_t y ) {
+		int8_t index = ((int8_t)letter) - ((int8_t)'A');
+		uint8_t px, py;
+		for( uint8_t r = 0; r < PF_GLYPH_ROWS; r++ ) {
+				for( uint8_t c = 0; c < PF_GLYPH_ROW_WID; c++ ) {
 						if( PF_WDAY_LETTERS[index][r][c] == '*' ) {
 								py = y + ( r * 2 );
 								px = x + ( c * 2 );
@@ -90,7 +90,7 @@ void draw_wday (Layer *layer, GContext *ctx) {
 
 		graphics_context_set_stroke_color(ctx, scheme.foregnd);
 
-		for( int k = 0; k < PF_WDAY_WID; k++ ) {
+		for( uint8_t k = 0; k < PF_WDAY_WID; k++ ) {
 				wday_letter( ctx, wday_buffer[k],
 						PF_WDAY_LETTER_X + (k * PF_WDAY_LETTER_W), PF_WDAY_LETTER_Y );
 		}

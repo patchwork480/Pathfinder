@@ -13,7 +13,7 @@ extern Layer *wday_layer;
 
 
 extern char wday_buffer[4];
-extern int pf_wday;
+extern int8_t pf_wday;
 
 
 extern void init_wday ();

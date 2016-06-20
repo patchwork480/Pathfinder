@@ -4,7 +4,7 @@
 #include "pf_btty.h"
 
 
-int pf_charge_pct;
+int8_t pf_charge_pct;
 bool pf_plugged;
 bool pf_charging;
 
@@ -58,7 +58,7 @@ void draw_btty (Layer *layer, GContext *ctx) {
 		graphics_context_set_stroke_color(ctx, scheme.border);
 		gpath_draw_outline(ctx, PF_BTTY_BORDER);
 
-		int btty_status = (pf_charge_pct-(pf_charge_pct>1?1:0)) / PF_STATUS_WID;
+		int8_t btty_status = (pf_charge_pct-(pf_charge_pct>1?1:0)) / PF_STATUS_WID;
 		if(PF_BTTY_STATII[btty_status] == NULL) {
 				PF_BTTY_STATII[btty_status] = gpath_create(&PF_BTTY_STATII_INFO[btty_status]);
 		}
@@ -141,7 +141,7 @@ void draw_chrg (Layer *layer, GContext *ctx) {
 
 
 void deinit_btty () {
-		for( int k = 0; k < PF_NUM_STATII; k++ ) {
+		for( int8_t k = 0; k < PF_NUM_STATII; k++ ) {
 				if(PF_BTTY_STATII[k] != NULL) {
 						gpath_destroy(PF_BTTY_STATII[k]);
 						PF_BTTY_STATII[k] = NULL;

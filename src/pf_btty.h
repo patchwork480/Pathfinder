@@ -31,7 +31,7 @@ extern Layer *plug_layer;
 extern Layer *chrg_layer;
 
 
-extern int pf_charge_pct;
+extern uint8_t pf_charge_pct;
 extern bool pf_plugged;
 extern bool pf_charging;
 

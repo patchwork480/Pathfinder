@@ -15,7 +15,7 @@
 extern Layer *moon_layer;
 
 
-extern int pf_moon;
+extern int8_t pf_moon;
 
 
 extern void init_moon ();

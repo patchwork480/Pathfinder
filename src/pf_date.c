@@ -18,9 +18,9 @@
 
 
 char date_buffer[9];
-int pf_year;
-int pf_mon;
-int pf_mday;
+int16_t pf_year;
+int8_t pf_mon;
+int8_t pf_mday;
 
 
 void init_date () {
@@ -95,7 +95,7 @@ const GPathInfo PF_DATE_SEGMENTS_INFO[PF_NUM_SEGMENTS] = {
 
 
 void draw_date_glyph (GContext *ctx, bool segments[PF_NUM_SEGMENTS], int place) {
-		for( int s = 0; s < PF_NUM_SEGMENTS; s++ ) {
+		for( uint8_t s = 0; s < PF_NUM_SEGMENTS; s++ ) {
 				if(segments[s]) {
 						if(PF_DATE_SEGMENTS[place][s] == NULL) {
 								PF_DATE_SEGMENTS[place][s] = gpath_create(&PF_DATE_SEGMENTS_INFO[s]);
@@ -174,8 +174,8 @@ void deinit_date () {
 				gpath_destroy(PF_DATE_DASH_2);
 				PF_DATE_DASH_2 = NULL;
 		}
-		for( int p = 0; p < PF_DATE_PLACES; p++ ) {
-				for( int s = 0; s < PF_NUM_SEGMENTS; s++ ) {
+		for( uint8_t p = 0; p < PF_DATE_PLACES; p++ ) {
+				for( uint8_t s = 0; s < PF_NUM_SEGMENTS; s++ ) {
 						if(PF_DATE_SEGMENTS[p][s] != NULL) {
 								gpath_destroy(PF_DATE_SEGMENTS[p][s]);
 								PF_DATE_SEGMENTS[p][s] = NULL;

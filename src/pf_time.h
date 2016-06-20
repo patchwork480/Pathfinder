@@ -11,9 +11,9 @@ extern Layer *time_layer;
 
 
 extern char time_buffer[9];
-extern int pf_hour;
-extern int pf_min;
-extern int pf_sec;
+extern int8_t pf_hour;
+extern int8_t pf_min;
+extern int8_t pf_sec;
 
 
 extern void init_time ();
