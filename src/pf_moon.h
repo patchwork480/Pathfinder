@@ -15,13 +15,7 @@
 extern Layer *moon_layer;
 
 
-extern char moon_buffer[12];
 extern int pf_moon;
-extern int pf_juldate;
-
-
-extern int julian_date (int year, int month, int day);
-extern int moon_phase (int julday);
 
 
 extern void init_moon ();

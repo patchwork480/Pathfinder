@@ -1,6 +1,7 @@
 #include <pebble.h>
 #include "pf_scheme.h"
 #include "pf_util.h"
+#include "pf_astro.h"
 #include "pf_time.h"
 #include "pf_date.h"
 #include "pf_wday.h"
@@ -34,6 +35,8 @@ static void update_time (struct tm *tick_time, TimeUnits units_changed) {
 						strupr(wday_buffer);
 
 						pf_juldate = julian_date(pf_year, pf_mon, pf_mday);
+						snprintf(message_buffer, sizeof(message_buffer), "Julian: %d", pf_juldate);
+						APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
 						pf_moon = moon_phase(pf_juldate);
 				}
 

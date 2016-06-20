@@ -2,19 +2,8 @@
 #include "pf_scheme.h"
 #include "pf_moon.h"
 
-char moon_buffer[12];
+
 int pf_moon;
-int pf_juldate;
-
-
-int julian_date (int year, int month, int day) {
-		return year + month + day;
-}
-
-
-int moon_phase (int julday) {
-		return julday % PF_NUM_PHASES;
-}
 
 
 void init_moon () {
