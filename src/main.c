@@ -45,7 +45,7 @@ static void update_time (struct tm *tick_time, TimeUnits units_changed) {
 
 						gmt_juldate = julian_date(gmt_year, gmt_mon, gmt_mday);
 						snprintf(message_buffer, sizeof(message_buffer),
-								 "GMT: %04d-%02d-%02d => %d", gmt_year, gmt_mon, gmt_mday, gmt_juldate);
+								 "GMT: %04d-%02d-%02d => %d", gmt_year, gmt_mon, gmt_mday, (int)gmt_juldate);
 						APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
 
 						gmt_decitime = hms_to_decimal(gmt_hour, gmt_min, gmt_sec);
