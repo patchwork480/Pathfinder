@@ -22,6 +22,8 @@ Layer *moon_layer;
 
 
 static void update_time (struct tm *tick_time, TimeUnits units_changed) {
+		bool update_moon = false;
+
 		if( pf_sec != tick_time->tm_sec ) {
 
 				if( pf_mday != tick_time->tm_mday ) {
@@ -34,6 +36,23 @@ static void update_time (struct tm *tick_time, TimeUnits units_changed) {
 						strftime(wday_buffer, sizeof(wday_buffer), "%a", tick_time);
 						strupr(wday_buffer);
 
+						update_moon = true;
+				}
+
+				pf_hour = tick_time->tm_hour;
+				pf_min = tick_time->tm_min;
+				pf_sec = tick_time->tm_sec;
+				if(clock_is_24h_style()) {
+						strftime(time_buffer, sizeof(time_buffer), "%k:%M:%S", tick_time);
+				} else {
+						strftime(time_buffer, sizeof(time_buffer), "%I:%M:%S", tick_time);
+				}
+
+				if( (pf_sec == 0) && ((pf_min % 5) == 0) ) {
+						update_moon = true;
+				}
+
+				if( update_moon ) {
 						time_t now = time(NULL);
 						struct tm *gmt = gmtime(&now);
 						gmt_year = 1900 + gmt->tm_year;
@@ -55,16 +74,7 @@ static void update_time (struct tm *tick_time, TimeUnits units_changed) {
 								 (int)(gmt_decitime*1000000.0));
 						APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
 
-						pf_moon = moon_phase(gmt_juldate);
-				}
-
-				pf_hour = tick_time->tm_hour;
-				pf_min = tick_time->tm_min;
-				pf_sec = tick_time->tm_sec;
-				if(clock_is_24h_style()) {
-						strftime(time_buffer, sizeof(time_buffer), "%k:%M:%S", tick_time);
-				} else {
-						strftime(time_buffer, sizeof(time_buffer), "%I:%M:%S", tick_time);
+						pf_moon = moon_phase(gmt_juldate, gmt_decitime);
 				}
 
 				layer_mark_dirty(time_layer);

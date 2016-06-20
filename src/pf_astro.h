@@ -23,7 +23,7 @@ extern int gmt_juldate;
 
 extern double hms_to_decimal (int hours, int minutes, int seconds);
 extern int julian_date (int year, int month, int day);
-extern int8_t moon_phase (int julday);
+extern int8_t moon_phase (int julday, double decitime);
 
 
 /* EOF */
