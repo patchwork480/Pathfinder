@@ -4,7 +4,7 @@
 
 char moon_buffer[12];
 int pf_moon;
-int jul_date;
+int pf_juldate;
 
 
 int julian_date (int year, int month, int day) {

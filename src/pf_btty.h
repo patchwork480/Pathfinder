@@ -22,7 +22,7 @@
 #define PF_CHRG_H		(9)
 
 
-#define PF_NUM_STATII	(11)
+#define PF_NUM_STATII	(10)
 #define PF_STATUS_WID	(10)
 
 

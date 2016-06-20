@@ -37,7 +37,6 @@ const GPathInfo PF_BTTY_BORDER_INFO = {
 
 GPath *PF_BTTY_STATII[PF_NUM_STATII] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL};
 const GPathInfo PF_BTTY_STATII_INFO[PF_NUM_STATII] = {
-		{ .num_points = 5, .points = (GPoint []) { {3,2}, { 3,2}, { 3,4}, {3,4}, {3,2} } },
 		{ .num_points = 5, .points = (GPoint []) { {3,2}, { 5,2}, { 5,4}, {3,4}, {3,2} } },
 		{ .num_points = 5, .points = (GPoint []) { {3,2}, { 8,2}, { 8,4}, {3,4}, {3,2} } },
 		{ .num_points = 5, .points = (GPoint []) { {3,2}, {11,2}, {11,4}, {3,4}, {3,2} } },
@@ -58,7 +57,7 @@ void draw_btty (Layer *layer, GContext *ctx) {
 		graphics_context_set_stroke_color(ctx, scheme.border);
 		gpath_draw_outline(ctx, PF_BTTY_BORDER);
 
-		int btty_status = pf_charge_pct / PF_STATUS_WID;
+		int btty_status = (pf_charge_pct-(pf_charge_pct>1?1:0)) / PF_STATUS_WID;
 		if(PF_BTTY_STATII[btty_status] == NULL) {
 				PF_BTTY_STATII[btty_status] = gpath_create(&PF_BTTY_STATII_INFO[btty_status]);
 		}
