@@ -25,27 +25,37 @@ static void update_time (struct tm *tick_time, TimeUnits units_changed) {
 		if( pf_sec != tick_time->tm_sec ) {
 
 				if( pf_mday != tick_time->tm_mday ) {
-						pf_year = tick_time->tm_year;
-						pf_mon = tick_time->tm_mon;
+						pf_year = 1900 + tick_time->tm_year;
+						pf_mon = 1 + tick_time->tm_mon;
 						pf_mday = tick_time->tm_mday;
-						strftime(date_buffer, sizeof(date_buffer), "%y %m-%d", tick_time);
+						strftime(date_buffer, sizeof(date_buffer), "%y-%m-%d", tick_time);
 
 						pf_wday = tick_time->tm_wday;
 						strftime(wday_buffer, sizeof(wday_buffer), "%a", tick_time);
 						strupr(wday_buffer);
 
-						struct tm *gmt = gmtime(tick_time);
-						gmt_year = gmt->tm_year;
-						gmt_mon = gmt->tm_mon;
+						time_t now = time(NULL);
+						struct tm *gmt = gmtime(&now);
+						gmt_year = 1900 + gmt->tm_year;
+						gmt_mon = 1 + gmt->tm_mon;
 						gmt_mday = gmt->tm_mday;
 						gmt_hour = gmt->tm_hour;
 						gmt_min = gmt->tm_min;
 						gmt_sec = gmt->tm_sec;
 
 						gmt_juldate = julian_date(gmt_year, gmt_mon, gmt_mday);
-						snprintf(message_buffer, sizeof(message_buffer), "Julian: %d", gmt_juldate);
+						snprintf(message_buffer, sizeof(message_buffer),
+								 "GMT: %04d-%02d-%02d => %d", gmt_year, gmt_mon, gmt_mday, gmt_juldate);
 						APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
-						pf_moon = moon_phase(pf_juldate);
+
+						gmt_decitime = hms_to_decimal(gmt_hour, gmt_min, gmt_sec);
+						snprintf(message_buffer, sizeof(message_buffer),
+								 "GMT: %02d:%02d:%02d => %d.%d", gmt_hour, gmt_min, gmt_sec,
+								 (int)gmt_decitime,
+								 (int)(gmt_decitime*1000000.0));
+						APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
+
+						pf_moon = moon_phase(gmt_juldate);
 				}
 
 				pf_hour = tick_time->tm_hour;
