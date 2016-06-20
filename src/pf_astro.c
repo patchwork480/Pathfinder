@@ -2,7 +2,23 @@
 #include "pf_astro.h"
 #include "pf_moon.h"
 
-int pf_juldate;
+
+int gmt_juldate;
+int gmt_year;
+int gmt_mon;
+int gmt_mday;
+int gmt_hour;
+int gmt_min;
+int gmt_sec;
+
+
+double hms_to_decimal (int hours, int minutes, int seconds) {
+		double decimal =
+				((double)hours)
+				+ (((double)minutes) / MINS_PER_HOUR)
+				+ (((double)seconds) / SECS_PER_HOUR);
+		return (decimal / HOURS_PER_DAY);
+}
 
 
 int julian_date (int year, int month, int day) {

@@ -34,8 +34,16 @@ static void update_time (struct tm *tick_time, TimeUnits units_changed) {
 						strftime(wday_buffer, sizeof(wday_buffer), "%a", tick_time);
 						strupr(wday_buffer);
 
-						pf_juldate = julian_date(pf_year, pf_mon, pf_mday);
-						snprintf(message_buffer, sizeof(message_buffer), "Julian: %d", pf_juldate);
+						struct tm *gmt = gmtime(tick_time);
+						gmt_year = gmt->tm_year;
+						gmt_mon = gmt->tm_mon;
+						gmt_mday = gmt->tm_mday;
+						gmt_hour = gmt->tm_hour;
+						gmt_min = gmt->tm_min;
+						gmt_sec = gmt->tm_sec;
+
+						gmt_juldate = julian_date(gmt_year, gmt_mon, gmt_mday);
+						snprintf(message_buffer, sizeof(message_buffer), "Julian: %d", gmt_juldate);
 						APP_LOG(APP_LOG_LEVEL_DEBUG, message_buffer);
 						pf_moon = moon_phase(pf_juldate);
 				}
