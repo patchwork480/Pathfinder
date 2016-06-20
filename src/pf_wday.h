@@ -12,13 +12,12 @@
 extern Layer *wday_layer;
 
 
-extern char wday_buffer[12];
-extern int last_wday;
+extern char wday_buffer[4];
+extern int pf_wday;
 
 
 extern void init_wday ();
 extern void deinit_wday ();
-extern void update_wday (struct tm *tick_wday, TimeUnits units_changed);
 extern void draw_wday (Layer *layer, GContext *ctx);
 
 

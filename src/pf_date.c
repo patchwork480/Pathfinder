@@ -18,21 +18,15 @@
 
 
 char date_buffer[9];
-int last_year;
-int last_mon;
-int last_mday;
+int pf_year;
+int pf_mon;
+int pf_mday;
 
 
 void init_date () {
-		last_year = -1;
-		last_mon = -1;
-		last_mday = -1;
-}
-
-
-void update_date (struct tm *tick_date, TimeUnits units_changed) {
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_date");
-		layer_mark_dirty(date_layer);
+		pf_year = -1;
+		pf_mon = -1;
+		pf_mday = -1;
 }
 
 
@@ -103,7 +97,7 @@ const GPathInfo PF_DATE_SEGMENTS_INFO[PF_NUM_SEGMENTS] = {
 void draw_date_glyph (GContext *ctx, bool segments[PF_NUM_SEGMENTS], int place) {
 		for( int s = 0; s < PF_NUM_SEGMENTS; s++ ) {
 				if(segments[s]) {
-						if(PF_DATE_SEGMENTS[place][s]==NULL) {
+						if(PF_DATE_SEGMENTS[place][s] == NULL) {
 								PF_DATE_SEGMENTS[place][s] = gpath_create(&PF_DATE_SEGMENTS_INFO[s]);
 								gpath_move_to(PF_DATE_SEGMENTS[place][s], PF_DATE_XY[place]);
 						}
@@ -129,7 +123,7 @@ void draw_date_digit (GContext *ctx, char digit, bool zero, int place) {
 void draw_date (Layer *layer, GContext *ctx) {
 
 		// Draw BORDER
-		if(PF_DATE_BORDER==NULL) {
+		if(PF_DATE_BORDER == NULL) {
 				PF_DATE_BORDER = gpath_create(&PF_DATE_BORDER_INFO);
 		}
 		graphics_context_set_stroke_color(ctx, scheme.border);
@@ -140,7 +134,7 @@ void draw_date (Layer *layer, GContext *ctx) {
 		graphics_context_set_fill_color(ctx, scheme.foregnd);
 
 		// Draw DASH #1
-		if(PF_DATE_DASH_1==NULL) {
+		if(PF_DATE_DASH_1 == NULL) {
 				PF_DATE_DASH_1 = gpath_create(&PF_DATE_DASH_INFO);
 				gpath_move_to(PF_DATE_DASH_1, (GPoint){PF_DATE_DASH_1_X, PF_DATE_DIGIT_Y});
 		}
@@ -148,7 +142,7 @@ void draw_date (Layer *layer, GContext *ctx) {
 		gpath_draw_outline(ctx, PF_DATE_DASH_1);
 
 		// Draw DASH #2
-		if(PF_DATE_DASH_2==NULL) {
+		if(PF_DATE_DASH_2 == NULL) {
 				PF_DATE_DASH_2 = gpath_create(&PF_DATE_DASH_INFO);
 				gpath_move_to(PF_DATE_DASH_2, (GPoint){PF_DATE_DASH_2_X, PF_DATE_DIGIT_Y});
 		}

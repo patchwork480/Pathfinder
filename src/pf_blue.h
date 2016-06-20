@@ -11,8 +11,8 @@
 extern Layer *blue_layer;
 
 
-extern bool app_connected;
-extern bool kit_connected;
+extern bool pf_app_conn;
+extern bool pf_kit_conn;
 
 
 extern void init_blue ();

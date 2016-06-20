@@ -3,7 +3,7 @@
 #include "pf_moon.h"
 
 char moon_buffer[12];
-int last_moon;
+int pf_moon;
 int jul_date;
 
 
@@ -12,16 +12,14 @@ int julian_date (int year, int month, int day) {
 }
 
 
+int moon_phase (int julday) {
+		return julday % PF_NUM_PHASES;
+}
+
+
 void init_moon () {
-		last_moon = -1;
+		pf_moon = -1;
 }
-
-
-void update_moon (struct tm *tick_time, TimeUnits units_changed) {
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_battery");
-		layer_mark_dirty(moon_layer);
-}
-
 
 
 GPath *PF_MOON_BORDER = NULL;
@@ -191,22 +189,22 @@ const GPathInfo PF_MOON_PHASES_INFO[PF_NUM_PHASES] = {
 
 
 void draw_moon (Layer *layer, GContext *ctx) {
-		if(PF_MOON_BORDER==NULL) {
+		if(PF_MOON_BORDER == NULL) {
 				PF_MOON_BORDER = gpath_create(&PF_MOON_BORDER_INFO);
 		}
 
  		graphics_context_set_fill_color(ctx, GColorBlack);
 		gpath_draw_filled(ctx, PF_MOON_BORDER);
 	
-		if( last_moon > -1 ) {
-				last_moon = last_moon % PF_NUM_PHASES;
-				if(PF_MOON_PHASES[last_moon] == NULL) {
-						PF_MOON_PHASES[last_moon] = gpath_create(&PF_MOON_PHASES_INFO[last_moon]);
+		if( pf_moon > -1 ) {
+				pf_moon = pf_moon % PF_NUM_PHASES;
+				if(PF_MOON_PHASES[pf_moon] == NULL) {
+						PF_MOON_PHASES[pf_moon] = gpath_create(&PF_MOON_PHASES_INFO[pf_moon]);
 				}
 				graphics_context_set_fill_color(ctx, GColorWhite);
 				graphics_context_set_stroke_color(ctx, GColorWhite);
-				gpath_draw_filled(ctx, PF_MOON_PHASES[last_moon]);
-				gpath_draw_outline(ctx, PF_MOON_PHASES[last_moon]);
+				gpath_draw_filled(ctx, PF_MOON_PHASES[pf_moon]);
+				gpath_draw_outline(ctx, PF_MOON_PHASES[pf_moon]);
 		}
 
 		graphics_context_set_stroke_color(ctx, scheme.border);

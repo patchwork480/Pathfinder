@@ -9,9 +9,6 @@
 #include "pf_moon.h"
 
 
-char message_buffer[64];
-
-
 static Window *main_window;
 Layer *time_layer;
 Layer *date_layer;
@@ -23,28 +20,26 @@ Layer *blue_layer;
 Layer *moon_layer;
 
 
-static void handle_time_changes (struct tm *tick_time, TimeUnits units_changed) {
-		if( last_mday != tick_time->tm_mday ) {
-				last_year = tick_time->tm_year;
-				last_mon = tick_time->tm_mon;
-				last_mday = tick_time->tm_mday;
-				strftime(date_buffer, sizeof(date_buffer), "%y %m-%d", tick_time);
+static void update_time (struct tm *tick_time, TimeUnits units_changed) {
+		if( pf_sec != tick_time->tm_sec ) {
 
-				last_wday = tick_time->tm_wday;
-				strftime(wday_buffer, sizeof(wday_buffer), "%a", tick_time);
-				strupr(wday_buffer);
+				if( pf_mday != tick_time->tm_mday ) {
+						pf_year = tick_time->tm_year;
+						pf_mon = tick_time->tm_mon;
+						pf_mday = tick_time->tm_mday;
+						strftime(date_buffer, sizeof(date_buffer), "%y %m-%d", tick_time);
 
-				jul_date = julian_date(last_year, last_mon, last_mday);
-				last_moon = jul_date % PF_NUM_PHASES;
+						pf_wday = tick_time->tm_wday;
+						strftime(wday_buffer, sizeof(wday_buffer), "%a", tick_time);
+						strupr(wday_buffer);
 
-				layer_mark_dirty(date_layer);
-				layer_mark_dirty(wday_layer);
-				layer_mark_dirty(moon_layer);
-		}
-		if( last_sec != tick_time->tm_sec ) {
-				last_hour = tick_time->tm_hour;
-				last_min = tick_time->tm_min;
-				last_sec = tick_time->tm_sec;
+						pf_juldate = julian_date(pf_year, pf_mon, pf_mday);
+						pf_moon = moon_phase(pf_juldate);
+				}
+
+				pf_hour = tick_time->tm_hour;
+				pf_min = tick_time->tm_min;
+				pf_sec = tick_time->tm_sec;
 				if(clock_is_24h_style()) {
 						strftime(time_buffer, sizeof(time_buffer), "%k:%M:%S", tick_time);
 				} else {
@@ -107,12 +102,14 @@ static void main_window_load (Window *window) {
 
 		// Force immediate draw
 		time_t now = time(NULL);
-		handle_time_changes(localtime(&now), YEAR_UNIT);
+		update_time(localtime(&now), YEAR_UNIT);
 		BatteryChargeState battery_state = battery_state_service_peek();
 		update_btty(battery_state);
+		update_blue_app(false);
+		update_blue_kit(false);
 
 		// Subscribe handlers
-		tick_timer_service_subscribe(SECOND_UNIT, handle_time_changes);
+		tick_timer_service_subscribe(SECOND_UNIT, update_time);
 		battery_state_service_subscribe(update_btty);
 		connection_service_subscribe((ConnectionHandlers) {
 			.pebble_app_connection_handler = update_blue_app,

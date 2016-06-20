@@ -3,24 +3,24 @@
 #include "pf_blue.h"
 
 
-bool app_connected;
-bool kit_connected;
+bool pf_app_conn;
+bool pf_kit_conn;
 
 
 void init_blue () {
-		app_connected = connection_service_peek_pebble_app_connection();
-		kit_connected = connection_service_peek_pebblekit_connection();
+		pf_app_conn = connection_service_peek_pebble_app_connection();
+		pf_kit_conn = connection_service_peek_pebblekit_connection();
 }
 
 
 void update_blue_app (bool connected) {
-		app_connected = connection_service_peek_pebble_app_connection();
+		pf_app_conn = connection_service_peek_pebble_app_connection();
 		layer_mark_dirty(blue_layer);
 }
 
 
 void update_blue_kit (bool connected) {
-		kit_connected = connection_service_peek_pebblekit_connection();
+		pf_kit_conn = connection_service_peek_pebblekit_connection();
 		layer_mark_dirty(blue_layer);
 }
 
@@ -36,8 +36,8 @@ const GPathInfo PF_BLUE_SYMBOL_INFO = {
 
 
 void draw_blue (Layer *layer, GContext *ctx) {
-		if(app_connected) {
-				if(PF_BLUE_SYMBOL==NULL) {
+		if(pf_app_conn) {
+				if(PF_BLUE_SYMBOL == NULL) {
 						PF_BLUE_SYMBOL = gpath_create(&PF_BLUE_SYMBOL_INFO);
 				}
 				graphics_context_set_stroke_color(ctx, scheme.foregnd);

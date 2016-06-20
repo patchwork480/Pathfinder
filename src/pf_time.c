@@ -22,23 +22,16 @@
 
 
 char time_buffer[9];
-int last_hour;
-int last_min;
-int last_sec;
+int pf_hour;
+int pf_min;
+int pf_sec;
 
 
 void init_time () {
-		last_hour = -1;
-		last_min = -1;
-		last_sec = -1;
+		pf_hour = -1;
+		pf_min = -1;
+		pf_sec = -1;
 }
-
-
-void update_time (struct tm *tick_time, TimeUnits units_changed) {
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "update_time");
-		layer_mark_dirty(time_layer);
-}
-
 
 
 GPath *PF_TIME_BORDER = NULL;
@@ -134,7 +127,7 @@ const GPathInfo PF_TIME_SEGMENTS_SM_INFO[PF_NUM_SEGMENTS] = {
 void draw_time_glyph (GContext *ctx, bool segments[PF_NUM_SEGMENTS], int place) {
 		for( int s = 0; s < PF_NUM_SEGMENTS; s++ ) {
 				if(segments[s]) {
-						if(PF_TIME_SEGMENTS[place][s]==NULL) {
+						if(PF_TIME_SEGMENTS[place][s] == NULL) {
 								if( (place==4) || (place==5) ) {
 										PF_TIME_SEGMENTS[place][s] = gpath_create(&PF_TIME_SEGMENTS_SM_INFO[s]);
 								} else {
@@ -164,7 +157,7 @@ void draw_time_digit (GContext *ctx, char digit, bool zero, int place) {
 void draw_time (Layer *layer, GContext *ctx) {
 
 		// Draw BORDER
-		if(PF_TIME_BORDER==NULL) {
+		if(PF_TIME_BORDER == NULL) {
 				PF_TIME_BORDER = gpath_create(&PF_TIME_BORDER_INFO);
 		}
 		graphics_context_set_stroke_color(ctx, scheme.border);
@@ -175,7 +168,7 @@ void draw_time (Layer *layer, GContext *ctx) {
 		graphics_context_set_fill_color(ctx, scheme.foregnd);
 
 		// Draw COLON #1
-		if(PF_TIME_COLON_1==NULL) {
+		if(PF_TIME_COLON_1 == NULL) {
 				PF_TIME_COLON_1 = gpath_create(&PF_TIME_COLON_1_INFO);
 				gpath_move_to(PF_TIME_COLON_1, (GPoint){PF_TIME_COLON_X, PF_TIME_DIGIT_Y});
 		}
@@ -183,7 +176,7 @@ void draw_time (Layer *layer, GContext *ctx) {
 		gpath_draw_outline(ctx, PF_TIME_COLON_1);
 
 		// Draw COLON #2
-		if(PF_TIME_COLON_2==NULL) {
+		if(PF_TIME_COLON_2 == NULL) {
 				PF_TIME_COLON_2 = gpath_create(&PF_TIME_COLON_2_INFO);
 				gpath_move_to(PF_TIME_COLON_2, (GPoint){PF_TIME_COLON_X, PF_TIME_DIGIT_Y});
 		}

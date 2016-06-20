@@ -31,9 +31,9 @@ extern Layer *plug_layer;
 extern Layer *chrg_layer;
 
 
-extern int last_charge_pct;
-extern bool last_plugged;
-extern bool last_charging;
+extern int pf_charge_pct;
+extern bool pf_plugged;
+extern bool pf_charging;
 
 extern void init_btty ();
 extern void deinit_btty ();

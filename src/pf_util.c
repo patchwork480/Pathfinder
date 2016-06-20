@@ -2,6 +2,9 @@
 #include "pf_util.h"
 
 
+char message_buffer[32];
+
+
 char *strupr (char *str) {
 		char *s;
 		for(s = str; *s; s++) {

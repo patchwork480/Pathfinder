@@ -13,20 +13,19 @@
 
 
 extern Layer *moon_layer;
-extern char message_buffer[64];
 
 
 extern char moon_buffer[12];
-extern int last_moon;
-extern int jul_date;
+extern int pf_moon;
+extern int pf_juldate;
 
 
 extern int julian_date (int year, int month, int day);
+extern int moon_phase (int julday);
 
 
 extern void init_moon ();
 extern void deinit_moon ();
-extern void update_moon (struct tm *tick_moon, TimeUnits units_changed);
 extern void draw_moon (Layer *layer, GContext *ctx);
 
 

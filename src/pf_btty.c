@@ -3,25 +3,25 @@
 #include "pf_btty.h"
 
 
-int charge_percent;
-bool is_plugged;
-bool is_charging;
+int pf_charge_pct;
+bool pf_plugged;
+bool pf_charging;
 
 
 void init_btty () {
-		charge_percent = -1;
-		is_plugged = false;
-		is_charging = false;
+		pf_charge_pct = -1;
+		pf_plugged = false;
+		pf_charging = false;
 }
 
 
 void update_btty (BatteryChargeState charge) {
-		if( (charge_percent != charge.charge_percent)
-			|| (is_plugged != charge.is_plugged)
-			|| (is_charging != charge.is_charging) ) {
-				charge_percent = charge.charge_percent;
-				is_plugged = charge.is_plugged;
-				is_charging = charge.is_charging;
+		if( (pf_charge_pct != charge.charge_percent)
+			|| (pf_plugged != charge.is_plugged)
+			|| (pf_charging != charge.is_charging) ) {
+				pf_charge_pct = charge.charge_percent;
+				pf_plugged = charge.is_plugged;
+				pf_charging = charge.is_charging;
 				layer_mark_dirty(btty_layer);
 		}
 }
@@ -52,14 +52,14 @@ const GPathInfo PF_BTTY_STATII_INFO[PF_NUM_STATII] = {
 
 
 void draw_btty (Layer *layer, GContext *ctx) {
-		if(PF_BTTY_BORDER==NULL) {
+		if(PF_BTTY_BORDER == NULL) {
 				PF_BTTY_BORDER = gpath_create(&PF_BTTY_BORDER_INFO);
 		}
 		graphics_context_set_stroke_color(ctx, scheme.border);
 		gpath_draw_outline(ctx, PF_BTTY_BORDER);
 
-		int btty_status = charge_percent / PF_STATUS_WID;
-		if(PF_BTTY_STATII[btty_status]==NULL) {
+		int btty_status = pf_charge_pct / PF_STATUS_WID;
+		if(PF_BTTY_STATII[btty_status] == NULL) {
 				PF_BTTY_STATII[btty_status] = gpath_create(&PF_BTTY_STATII_INFO[btty_status]);
 		}
 		graphics_context_set_fill_color(ctx, scheme.foregnd);
@@ -81,8 +81,8 @@ const GPathInfo PF_PLUG_SYMBOL_INFO = {
 
 
 void draw_plug (Layer *layer, GContext *ctx) {
-		if(is_plugged) {
-				if(PF_PLUG_SYMBOL==NULL) {
+		if(pf_plugged) {
+				if(PF_PLUG_SYMBOL == NULL) {
 						PF_PLUG_SYMBOL = gpath_create(&PF_PLUG_SYMBOL_INFO);
 				}
 				graphics_context_set_fill_color(ctx, scheme.foregnd);
@@ -113,17 +113,17 @@ const GPathInfo PF_CMPL_SYMBOL_INFO = {
 
 
 void draw_chrg (Layer *layer, GContext *ctx) {
-		if(is_plugged) {
-				if(charge_percent==100) {
-						if(PF_CMPL_SYMBOL==NULL) {
+		if(pf_plugged) {
+				if(pf_charge_pct == 100) {
+						if(PF_CMPL_SYMBOL == NULL) {
 								PF_CMPL_SYMBOL = gpath_create(&PF_CMPL_SYMBOL_INFO);
 						}
 						graphics_context_set_fill_color(ctx, scheme.foregnd);
 						graphics_context_set_stroke_color(ctx, scheme.foregnd);
 						gpath_draw_filled(ctx, PF_CMPL_SYMBOL);
 						gpath_draw_outline(ctx, PF_CMPL_SYMBOL);
-				} else if(is_charging) {
-						if(PF_CHRG_SYMBOL==NULL) {
+				} else if(pf_charging) {
+						if(PF_CHRG_SYMBOL == NULL) {
 								PF_CHRG_SYMBOL = gpath_create(&PF_CHRG_SYMBOL_INFO);
 						}
 						graphics_context_set_fill_color(ctx, scheme.foregnd);
