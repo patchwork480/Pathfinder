@@ -41,7 +41,7 @@ int julian_date (int year, int month, int day) {
 
 
 int8_t moon_phase (int julday, double decitime) {
-		double decimal = (double)julday + decitime + 2.5;
+		double decimal = (double)julday + decitime + 1.5;
 		decimal = (decimal / PF_DAYS_PER_LUNAR_ORBIT);
 		decimal = decimal - ((int)decimal);
 		return (int8_t)(decimal * (double)PF_NUM_PHASES);
